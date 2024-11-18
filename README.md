@@ -4,6 +4,8 @@
 
 Accessibility and full disk access for macOS can be checked and requested.
 
+https://github.com/user-attachments/assets/128933f1-9eb1-417b-aedf-32d09a2ff4b4
+
 ## Install
 
 ```shell
