@@ -1,8 +1,11 @@
 [package]
 name = "tauri-plugin-macos-permissions"
-version = "0.1.0"
-authors = [ "You" ]
-description = ""
+version = "2.0.0"
+authors = [ "ayangweb" ]
+description = "Accessibility and full disk access for macOS can be checked and requested."
+repository = "https://github.com/ayangweb/tauri-plugin-macos-permissions"
+keywords = ["macos-permissions", "tauri", "tauri-plugin", "accessibility", "full-disk-access"]
+license = "MIT"
 edition = "2021"
 rust-version = "1.77.2"
 exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
