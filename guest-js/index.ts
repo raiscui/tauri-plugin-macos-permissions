@@ -42,7 +42,5 @@ export const checkFullDiskAccessPermissions = () => {
  * Request Full Disk Access Permissions
  */
 export const requestFullDiskAccessPermissions = () => {
-  return invoke<boolean>(
-    MACOS_PERMISSIONS_PLUGIN.REQUEST_FULL_DISK_ACCESS_PERMISSIONS
-  );
+  return invoke(MACOS_PERMISSIONS_PLUGIN.REQUEST_FULL_DISK_ACCESS_PERMISSIONS);
 };
