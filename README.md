@@ -1,4 +1,8 @@
-# Tauri Plugin macos-permissions
+# tauri-plugin-macos-permissions
+
+> This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
+
+Accessibility and full disk access for macOS can be checked and requested.
 
 ## Install
 
