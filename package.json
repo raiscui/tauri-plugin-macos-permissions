@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ayangweb/tauri-plugin-macos-permissions"
+    "url": "git+https://github.com/ayangweb/tauri-plugin-macos-permissions.git"
   },
   "homepage": "https://github.com/ayangweb/tauri-plugin-macos-permissions#readme",
   "bugs": "https://github.com/ayangweb/tauri-plugin-macos-permissions/issues",
