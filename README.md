@@ -2,7 +2,7 @@
 
 > This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
 
-Accessibility and full disk access for macOS can be checked and requested.
+Check and request macOS permissions to accessibility and full disk access.
 
 https://github.com/user-attachments/assets/547a920c-29ef-4cd4-bba7-3e58c3f3bcd0
 
