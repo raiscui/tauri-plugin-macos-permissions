@@ -4,7 +4,7 @@
 
 Accessibility and full disk access for macOS can be checked and requested.
 
-https://github.com/user-attachments/assets/128933f1-9eb1-417b-aedf-32d09a2ff4b4
+https://github.com/user-attachments/assets/547a920c-29ef-4cd4-bba7-3e58c3f3bcd0
 
 ## Install
 
