@@ -68,9 +68,11 @@ git clone https://github.com/ayangweb/tauri-plugin-macos-permissions.git
 ```shell
 pnpm install
 
+pnpm build
+
 cd examples/tauri-app
 
 pnpm install
 
-pnpm run dev
+pnpm tauri dev
 ```
