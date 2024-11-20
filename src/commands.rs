@@ -1,4 +1,7 @@
-use tauri::{command, AppHandle, Manager, Runtime};
+use tauri::{command, AppHandle, Runtime};
+
+#[cfg(target_os = "macos")]
+use tauri::Manager;
 
 // Check Accessibility Permissions
 #[command]
@@ -53,7 +56,7 @@ pub async fn check_full_disk_access_permissions<R: Runtime>(
     {
         let _ = app_handle;
 
-        return true;
+        Ok(true)
     }
 }
 
@@ -72,7 +75,7 @@ pub async fn request_full_disk_access_permissions() -> Result<(), String> {
 
                 error
             })?;
-
-        Ok(())
     }
+
+    Ok(())
 }
