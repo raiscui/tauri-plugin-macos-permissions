@@ -3,21 +3,21 @@ use tauri::{command, AppHandle, Manager, Runtime};
 // Check Accessibility Permissions
 #[command]
 pub async fn check_accessibility_permissions() -> bool {
-    #[cfg(not(target_os = "macos"))]
-    return true;
-
     #[cfg(target_os = "macos")]
     return macos_accessibility_client::accessibility::application_is_trusted();
+
+    #[cfg(not(target_os = "macos"))]
+    return true;
 }
 
 // Request Accessibility Permissions
 #[command]
 pub async fn request_accessibility_permissions() -> bool {
-    #[cfg(not(target_os = "macos"))]
-    return true;
-
     #[cfg(target_os = "macos")]
     return macos_accessibility_client::accessibility::application_is_trusted_with_prompt();
+
+    #[cfg(not(target_os = "macos"))]
+    return true;
 }
 
 // Check Full Disk Access Permissions
