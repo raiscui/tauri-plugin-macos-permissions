@@ -1,6 +1,6 @@
 {
   "name": "tauri-plugin-macos-permissions-api",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "ayangweb",
   "description": "Accessibility and full disk access for macOS can be checked and requested.",
   "keywords": [
