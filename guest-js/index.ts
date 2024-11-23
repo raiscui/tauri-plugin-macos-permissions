@@ -28,10 +28,13 @@ export const checkAccessibilityPermissions = () => {
  * Request Accessibility Permissions.
  * @example
  * import { requestAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
- * await requestAccessibilityPermissions();
+ * const authorized = await requestAccessibilityPermissions();
+ * console.log(authorized); // false
  */
 export const requestAccessibilityPermissions = () => {
-  return invoke(MACOS_PERMISSIONS_PLUGIN.REQUEST_ACCESSIBILITY_PERMISSIONS);
+  return invoke<boolean>(
+    MACOS_PERMISSIONS_PLUGIN.REQUEST_ACCESSIBILITY_PERMISSIONS
+  );
 };
 
 /**
