@@ -46,18 +46,20 @@ pub fn run() {
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```ts
-import {
-  checkAccessibilityPermissions,
-  checkFullDiskAccessPermissions,
-  requestAccessibilityPermissions,
-  requestFullDiskAccessPermissions,
-} from "tauri-plugin-macos-permissions-api";
+import { checkAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
 
-await checkAccessibilityPermissions();
-await checkFullDiskAccessPermissions();
-await requestAccessibilityPermissions();
-await requestFullDiskAccessPermissions();
+const yes = await checkAccessibilityPermissions();
+console.log(yes); // true
 ```
+
+## Methods
+
+| Method                             | Description                           |
+| ---------------------------------- | ------------------------------------- |
+| `checkAccessibilityPermissions`    | Check Accessibility Permissions.      |
+| `requestAccessibilityPermissions`  | Request Accessibility Permissions.    |
+| `checkFullDiskAccessPermissions`   | Check Full Disk Access Permissions.   |
+| `requestFullDiskAccessPermissions` | Request Full Disk Access Permissions. |
 
 ## Example
 
