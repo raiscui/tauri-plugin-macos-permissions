@@ -6,6 +6,8 @@ use tauri::{
 
 mod commands;
 
+pub use commands::*;
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("macos-permissions")
         .invoke_handler(generate_handler![

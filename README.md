@@ -48,8 +48,8 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 ```ts
 import { checkAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
 
-const yes = await checkAccessibilityPermissions();
-console.log(yes); // true
+const authorized = await checkAccessibilityPermissions();
+console.log(authorized); // true
 ```
 
 ## Methods

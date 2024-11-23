@@ -12,7 +12,11 @@ export const MACOS_PERMISSIONS_PLUGIN = {
 };
 
 /**
- * Check Accessibility Permissions
+ * Check Accessibility Permissions.
+ * @example
+ * import { checkAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
+ * const authorized = await checkAccessibilityPermissions();
+ * console.log(authorized); // false
  */
 export const checkAccessibilityPermissions = () => {
   return invoke<boolean>(
@@ -21,16 +25,21 @@ export const checkAccessibilityPermissions = () => {
 };
 
 /**
- * Request Accessibility Permissions
+ * Request Accessibility Permissions.
+ * @example
+ * import { requestAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
+ * await requestAccessibilityPermissions();
  */
 export const requestAccessibilityPermissions = () => {
-  return invoke<boolean>(
-    MACOS_PERMISSIONS_PLUGIN.REQUEST_ACCESSIBILITY_PERMISSIONS
-  );
+  return invoke(MACOS_PERMISSIONS_PLUGIN.REQUEST_ACCESSIBILITY_PERMISSIONS);
 };
 
 /**
- * Check Full Disk Access Permissions
+ * Check Full Disk Access Permissions.
+ * @example
+ * import { checkFullDiskAccessPermissions } from "tauri-plugin-macos-permissions-api";
+ * const authorized = await checkFullDiskAccessPermissions();
+ * console.log(authorized); // false
  */
 export const checkFullDiskAccessPermissions = () => {
   return invoke<boolean>(
@@ -39,7 +48,10 @@ export const checkFullDiskAccessPermissions = () => {
 };
 
 /**
- * Request Full Disk Access Permissions
+ * Request Full Disk Access Permissions.
+ * @example
+ * import { requestFullDiskAccessPermissions } from "tauri-plugin-macos-permissions-api";
+ * await requestFullDiskAccessPermissions();
  */
 export const requestFullDiskAccessPermissions = () => {
   return invoke(MACOS_PERMISSIONS_PLUGIN.REQUEST_FULL_DISK_ACCESS_PERMISSIONS);
