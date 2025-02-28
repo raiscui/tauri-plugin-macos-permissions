@@ -85,7 +85,7 @@ pnpm tauri dev
 
 - Use [macos-accessibility-client](https://github.com/next-slide-please/macos-accessibility-client) to check and request accessibility permission.
 
-- Read [FullDiskAccess](https://github.com/inket/FullDiskAccess/blob/846e04ea2b84fce843f47d7e7f3421189221829c/Sources/FullDiskAccess/FullDiskAccess.swift#L46) source code to get and check full disk access permission.
+- Use [FullDiskAccess](https://github.com/inket/FullDiskAccess/blob/846e04ea2b84fce843f47d7e7f3421189221829c/Sources/FullDiskAccess/FullDiskAccess.swift#L46) to check full disk access permission.
 
 - Use [core-graphics](https://crates.io/crates/core-graphics) to check and request screen recording permission.
 
