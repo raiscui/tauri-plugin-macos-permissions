@@ -295,44 +295,64 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "Enables the check_accessibility_permissions command without any pre-configured scope.",
+          "description": "Enables the check_accessibility_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-check-accessibility-permissions"
+          "const": "allow-check-accessibility-permission"
         },
         {
-          "description": "Denies the check_accessibility_permissions command without any pre-configured scope.",
+          "description": "Denies the check_accessibility_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-check-accessibility-permissions"
+          "const": "deny-check-accessibility-permission"
         },
         {
-          "description": "Enables the check_full_disk_access_permissions command without any pre-configured scope.",
+          "description": "Enables the check_full_disk_access_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-check-full-disk-access-permissions"
+          "const": "allow-check-full-disk-access-permission"
         },
         {
-          "description": "Denies the check_full_disk_access_permissions command without any pre-configured scope.",
+          "description": "Denies the check_full_disk_access_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-check-full-disk-access-permissions"
+          "const": "deny-check-full-disk-access-permission"
         },
         {
-          "description": "Enables the request_accessibility_permissions command without any pre-configured scope.",
+          "description": "Enables the check_screen_recording_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-request-accessibility-permissions"
+          "const": "allow-check-screen-recording-permission"
         },
         {
-          "description": "Denies the request_accessibility_permissions command without any pre-configured scope.",
+          "description": "Denies the check_screen_recording_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-request-accessibility-permissions"
+          "const": "deny-check-screen-recording-permission"
         },
         {
-          "description": "Enables the request_full_disk_access_permissions command without any pre-configured scope.",
+          "description": "Enables the request_accessibility_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-request-full-disk-access-permissions"
+          "const": "allow-request-accessibility-permission"
         },
         {
-          "description": "Denies the request_full_disk_access_permissions command without any pre-configured scope.",
+          "description": "Denies the request_accessibility_permission command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-request-full-disk-access-permissions"
+          "const": "deny-request-accessibility-permission"
+        },
+        {
+          "description": "Enables the request_full_disk_access_permission command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-request-full-disk-access-permission"
+        },
+        {
+          "description": "Denies the request_full_disk_access_permission command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-request-full-disk-access-permission"
+        },
+        {
+          "description": "Enables the request_screen_recording_permission command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-request-screen-recording-permission"
+        },
+        {
+          "description": "Denies the request_screen_recording_permission command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-request-screen-recording-permission"
         },
         {
           "description": "Default permissions for the plugin",

@@ -1,67 +1,140 @@
 use tauri::{command, AppHandle, Runtime};
 
 #[cfg(target_os = "macos")]
-use tauri::Manager;
+use {
+    core_graphics::access::ScreenCaptureAccess,
+    macos_accessibility_client::accessibility::{
+        application_is_trusted, application_is_trusted_with_prompt,
+    },
+    std::{fs::read_dir, process::Command},
+    tauri::Manager,
+};
 
-// Check Accessibility Permissions.
+/// Check accessibility permission.
+///
+/// # Returns
+/// - `bool`: `true` if accessibility permission are granted, `false` otherwise.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::check_accessibility_permission;
+///
+/// let authorized = check_accessibility_permission().await;
+/// println!("Authorized: {}", authorized); // false
+/// ```
 #[command]
-pub async fn check_accessibility_permissions() -> bool {
+pub async fn check_accessibility_permission() -> bool {
     #[cfg(target_os = "macos")]
-    return macos_accessibility_client::accessibility::application_is_trusted();
+    return application_is_trusted();
 
     #[cfg(not(target_os = "macos"))]
     return true;
 }
 
-// Request Accessibility Permissions.
+/// Request accessibility permission.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::request_accessibility_permission;
+///
+/// request_accessibility_permission().await;
+/// ```
 #[command]
-pub async fn request_accessibility_permissions() -> bool {
+pub async fn request_accessibility_permission() {
     #[cfg(target_os = "macos")]
-    return macos_accessibility_client::accessibility::application_is_trusted_with_prompt();
-
-    #[cfg(not(target_os = "macos"))]
-    return true;
+    application_is_trusted_with_prompt();
 }
 
-// Check Full Disk Access Permissions.
+/// Check full disk access permission.
+///
+/// # Returns
+/// - `bool`: `true` if full disk access permission are granted, `false` otherwise.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::check_full_disk_access_permission;
+///
+/// let authorized = check_full_disk_access_permission(app_handle).await;
+/// println!("Authorized: {}", authorized); // false
+/// ```
 #[command]
-pub async fn check_full_disk_access_permissions<R: Runtime>(
-    app_handle: AppHandle<R>,
-) -> Result<bool, String> {
+pub async fn check_full_disk_access_permission<R: Runtime>(app_handle: AppHandle<R>) -> bool {
     #[cfg(target_os = "macos")]
     {
         // Reference: https://github.com/inket/FullDiskAccess/blob/846e04ea2b84fce843f47d7e7f3421189221829c/Sources/FullDiskAccess/FullDiskAccess.swift#L46
         let check_dirs = vec!["Library/Containers/com.apple.stocks", "Library/Safari"];
 
         if let Ok(home_dir) = app_handle.path().home_dir() {
-            for dir in check_dirs.iter() {
-                if std::fs::read_dir(&home_dir.join(dir)).is_ok() {
-                    return Ok(true);
+            for check_dir in check_dirs.iter() {
+                if read_dir(&home_dir.join(check_dir)).is_ok() {
+                    return true;
                 }
             }
         }
 
-        Ok(false)
+        false
     }
 
     #[cfg(not(target_os = "macos"))]
     {
         let _ = app_handle;
 
-        Ok(true)
+        true
     }
 }
 
-// Request Full Disk Access Permissions.
+/// Request full disk access permission.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::request_full_disk_access_permission;
+///
+/// request_full_disk_access_permission().await;
+/// ```
 #[command]
-pub async fn request_full_disk_access_permissions() -> Result<(), String> {
+pub async fn request_full_disk_access_permission() -> Result<(), String> {
     #[cfg(target_os = "macos")]
     {
-        std::process::Command::new("open")
+        Command::new("open")
             .arg("x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")
             .output()
             .map_err(|error| error.to_string())?;
     }
 
     Ok(())
+}
+
+/// Check screen recording permission.
+///
+/// # Returns
+/// - `bool`: `true` if screen recording permission are granted, `false` otherwise.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::check_screen_recording_permission;
+///
+/// let authorized = check_screen_recording_permission().await;
+/// println!("Authorized: {}", authorized); // false
+/// ```
+#[command]
+pub async fn check_screen_recording_permission() -> bool {
+    #[cfg(target_os = "macos")]
+    return ScreenCaptureAccess::preflight(&ScreenCaptureAccess::default());
+
+    #[cfg(not(target_os = "macos"))]
+    return true;
+}
+
+/// Request screen recording permission.
+///
+/// # Example
+/// ```
+/// use tauri_plugin_macos_permissions::request_screen_recording_permission;
+///
+/// request_screen_recording_permission().await;
+/// ```
+#[command]
+pub async fn request_screen_recording_permission() {
+    #[cfg(target_os = "macos")]
+    ScreenCaptureAccess::request(&ScreenCaptureAccess::default());
 }

@@ -1,61 +1,97 @@
 import { invoke } from "@tauri-apps/api/core";
 
-export const MACOS_PERMISSIONS_PLUGIN = {
-  CHECK_ACCESSIBILITY_PERMISSIONS:
-    "plugin:macos-permissions|check_accessibility_permissions",
-  REQUEST_ACCESSIBILITY_PERMISSIONS:
-    "plugin:macos-permissions|request_accessibility_permissions",
-  CHECK_FULL_DISK_ACCESS_PERMISSIONS:
-    "plugin:macos-permissions|check_full_disk_access_permissions",
-  REQUEST_FULL_DISK_ACCESS_PERMISSIONS:
-    "plugin:macos-permissions|request_full_disk_access_permissions",
+export const COMMAND = {
+  CHECK_ACCESSIBILITY_PERMISSION:
+    "plugin:macos-permissions|check_accessibility_permission",
+  REQUEST_ACCESSIBILITY_PERMISSION:
+    "plugin:macos-permissions|request_accessibility_permission",
+  CHECK_FULL_DISK_ACCESS_PERMISSION:
+    "plugin:macos-permissions|check_full_disk_access_permission",
+  REQUEST_FULL_DISK_ACCESS_PERMISSION:
+    "plugin:macos-permissions|request_full_disk_access_permission",
+  CHECK_SCREEN_RECORDING_PERMISSION:
+    "plugin:macos-permissions|check_screen_recording_permission",
+  REQUEST_SCREEN_RECORDING_PERMISSION:
+    "plugin:macos-permissions|request_screen_recording_permission",
 };
 
 /**
- * Check Accessibility Permissions.
+ * Check accessibility permission.
+ *
+ * @returns `true` if accessibility permission are granted, `false` otherwise.
+ *
  * @example
- * import { checkAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
- * const authorized = await checkAccessibilityPermissions();
+ * import { checkAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
+ *
+ * const authorized = await checkAccessibilityPermission();
  * console.log(authorized); // false
  */
-export const checkAccessibilityPermissions = () => {
-  return invoke<boolean>(
-    MACOS_PERMISSIONS_PLUGIN.CHECK_ACCESSIBILITY_PERMISSIONS
-  );
+export const checkAccessibilityPermission = () => {
+  return invoke<boolean>(COMMAND.CHECK_ACCESSIBILITY_PERMISSION);
 };
 
 /**
- * Request Accessibility Permissions.
+ * Request accessibility permission.
+ *
  * @example
- * import { requestAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
- * const authorized = await requestAccessibilityPermissions();
+ * import { requestAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
+ *
+ * await requestAccessibilityPermission();
+ */
+export const requestAccessibilityPermission = () => {
+  return invoke(COMMAND.REQUEST_ACCESSIBILITY_PERMISSION);
+};
+
+/**
+ * Check full disk access permission.
+ *
+ * @returns `true` if full disk access permission are granted, `false` otherwise.
+ *
+ * @example
+ * import { checkFullDiskAccessPermission } from "tauri-plugin-macos-permissions-api";
+ *
+ * const authorized = await checkFullDiskAccessPermission();
  * console.log(authorized); // false
  */
-export const requestAccessibilityPermissions = () => {
-  return invoke<boolean>(
-    MACOS_PERMISSIONS_PLUGIN.REQUEST_ACCESSIBILITY_PERMISSIONS
-  );
+export const checkFullDiskAccessPermission = () => {
+  return invoke<boolean>(COMMAND.CHECK_FULL_DISK_ACCESS_PERMISSION);
 };
 
 /**
- * Check Full Disk Access Permissions.
+ * Request full disk access permission.
+ *
  * @example
- * import { checkFullDiskAccessPermissions } from "tauri-plugin-macos-permissions-api";
- * const authorized = await checkFullDiskAccessPermissions();
+ * import { requestFullDiskAccessPermission } from "tauri-plugin-macos-permission-api";
+ *
+ * await requestFullDiskAccessPermission();
+ */
+export const requestFullDiskAccessPermission = () => {
+  return invoke(COMMAND.REQUEST_FULL_DISK_ACCESS_PERMISSION);
+};
+
+/**
+ * Check screen recording permission.
+ *
+ * @returns `true` if screen recording permission are granted, `false` otherwise.
+ *
+ * @example
+ * import { checkScreenRecordingPermission } from "tauri-plugin-macos-permissions-api";
+ *
+ * const authorized = await checkScreenRecordingPermission();
  * console.log(authorized); // false
  */
-export const checkFullDiskAccessPermissions = () => {
-  return invoke<boolean>(
-    MACOS_PERMISSIONS_PLUGIN.CHECK_FULL_DISK_ACCESS_PERMISSIONS
-  );
+export const checkScreenRecordingPermission = () => {
+  return invoke<boolean>(COMMAND.CHECK_SCREEN_RECORDING_PERMISSION);
 };
 
 /**
- * Request Full Disk Access Permissions.
+ * Request screen recording permission.
+ *
  * @example
- * import { requestFullDiskAccessPermissions } from "tauri-plugin-macos-permissions-api";
- * await requestFullDiskAccessPermissions();
+ * import { requestScreenRecordingPermission } from "tauri-plugin-macos-permissions-api";
+ *
+ * await requestScreenRecordingPermission();
  */
-export const requestFullDiskAccessPermissions = () => {
-  return invoke(MACOS_PERMISSIONS_PLUGIN.REQUEST_FULL_DISK_ACCESS_PERMISSIONS);
+export const requestScreenRecordingPermission = () => {
+  return invoke(COMMAND.REQUEST_SCREEN_RECORDING_PERMISSION);
 };

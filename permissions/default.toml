@@ -2,4 +2,4 @@
 
 [default]
 description = "Default permissions for the plugin"
-permissions = ["allow-check-accessibility-permissions", "allow-request-accessibility-permissions", "allow-check-full-disk-access-permissions", "allow-request-full-disk-access-permissions"]
+permissions = ["allow-check-accessibility-permission", "allow-request-accessibility-permission", "allow-check-full-disk-access-permission", "allow-request-full-disk-access-permission", "allow-check-screen-recording-permission", "allow-request-screen-recording-permission"]

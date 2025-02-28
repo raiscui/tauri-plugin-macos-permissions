@@ -1,35 +1,39 @@
 import { useCreation, useMount, useReactive } from "ahooks";
 import { Button, Flex, List, Typography } from "antd";
 import {
-  checkAccessibilityPermissions,
-  checkFullDiskAccessPermissions,
-  requestAccessibilityPermissions,
-  requestFullDiskAccessPermissions,
+  checkAccessibilityPermission,
+  checkFullDiskAccessPermission,
+  requestAccessibilityPermission,
+  requestFullDiskAccessPermission,
+  checkScreenRecordingPermission,
+  requestScreenRecordingPermission,
 } from "tauri-plugin-macos-permissions-api";
 
 const App = () => {
   const state = useReactive({
-    accessibilityPermissions: false,
-    fullDiskAccessPermissions: false,
+    accessibilityPermission: false,
+    fullDiskAccessPermission: false,
+    screenRecordingPermission: false,
   });
 
   useMount(async () => {
-    state.accessibilityPermissions = await checkAccessibilityPermissions();
-    state.fullDiskAccessPermissions = await checkFullDiskAccessPermissions();
+    state.accessibilityPermission = await checkAccessibilityPermission();
+    state.fullDiskAccessPermission = await checkFullDiskAccessPermission();
+    state.screenRecordingPermission = await checkScreenRecordingPermission();
   });
 
   const data = useCreation(() => {
     return [
       {
-        label: "Accessibility Permissions",
-        value: state.accessibilityPermissions,
+        label: "Accessibility Permission",
+        value: state.accessibilityPermission,
         check: async () => {
-          await requestAccessibilityPermissions();
+          await requestAccessibilityPermission();
 
           const check = async () => {
-            const opened = await checkAccessibilityPermissions();
+            const opened = await checkAccessibilityPermission();
 
-            state.accessibilityPermissions = opened;
+            state.accessibilityPermission = opened;
 
             if (opened) return;
 
@@ -40,12 +44,17 @@ const App = () => {
         },
       },
       {
-        label: "Full Disk Access Permissions",
-        value: state.fullDiskAccessPermissions,
-        check: requestFullDiskAccessPermissions,
+        label: "Full Disk Access Permission",
+        value: state.fullDiskAccessPermission,
+        check: requestFullDiskAccessPermission,
+      },
+      {
+        label: "Screen Recording Permission",
+        value: state.screenRecordingPermission,
+        check: requestScreenRecordingPermission,
       },
     ];
-  }, [state.accessibilityPermissions, state.fullDiskAccessPermissions]);
+  }, [{ ...state }]);
 
   return (
     <Flex vertical gap="middle">

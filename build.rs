@@ -1,8 +1,10 @@
 const COMMANDS: &[&str] = &[
-    "check_accessibility_permissions",
-    "request_accessibility_permissions",
-    "check_full_disk_access_permissions",
-    "request_full_disk_access_permissions",
+    "check_accessibility_permission",
+    "request_accessibility_permission",
+    "check_full_disk_access_permission",
+    "request_full_disk_access_permission",
+    "check_screen_recording_permission",
+    "request_screen_recording_permission",
 ];
 
 fn main() {

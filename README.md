@@ -2,9 +2,9 @@
 
 > This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
 
-Check and request macOS permissions to accessibility and full disk access.
+Check and request macos permissions to accessibility, full disk access and screen recording.
 
-https://github.com/user-attachments/assets/547a920c-29ef-4cd4-bba7-3e58c3f3bcd0
+https://github.com/user-attachments/assets/73d13bff-e7f8-47d4-98d8-3692de852760
 
 ## Install
 
@@ -46,20 +46,22 @@ pub fn run() {
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```ts
-import { checkAccessibilityPermissions } from "tauri-plugin-macos-permissions-api";
+import { checkAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
 
-const authorized = await checkAccessibilityPermissions();
+const authorized = await checkAccessibilityPermission();
 console.log(authorized); // true
 ```
 
 ## Methods
 
-| Method                             | Description                           |
-| ---------------------------------- | ------------------------------------- |
-| `checkAccessibilityPermissions`    | Check Accessibility Permissions.      |
-| `requestAccessibilityPermissions`  | Request Accessibility Permissions.    |
-| `checkFullDiskAccessPermissions`   | Check Full Disk Access Permissions.   |
-| `requestFullDiskAccessPermissions` | Request Full Disk Access Permissions. |
+| Method                             | Description                          |
+| ---------------------------------- | ------------------------------------ |
+| `checkAccessibilityPermission`     | Check accessibility permission.      |
+| `requestAccessibilityPermission`   | Request accessibility permission.    |
+| `checkFullDiskAccessPermission`    | Check full disk access permission.   |
+| `requestFullDiskAccessPermission`  | Request full disk access permission. |
+| `checkScreenRecordingPermission`   | Check screen recording permission.   |
+| `requestScreenRecordingPermission` | Request screen recording permission. |
 
 ## Example
 
@@ -78,3 +80,15 @@ pnpm install
 
 pnpm tauri dev
 ```
+
+## Thanks
+
+- Use [macos-accessibility-client](https://github.com/next-slide-please/macos-accessibility-client) to check and request accessibility permission.
+
+- Read [FullDiskAccess](https://github.com/inket/FullDiskAccess/blob/846e04ea2b84fce843f47d7e7f3421189221829c/Sources/FullDiskAccess/FullDiskAccess.swift#L46) source code to get and check full disk access permission.
+
+- Use [core-graphics](https://crates.io/crates/core-graphics) to check and request screen recording permission.
+
+## Who's Use It
+
+- [EcoPaste](https://github.com/EcoPasteHub/EcoPaste) - Open source cross-platform clipboard management tool.
