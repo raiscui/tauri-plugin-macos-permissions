@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-macos-permissions"
-version = "2.1.0"
+version = "2.1.1"
 authors = [ "ayangweb" ]
 description = "Check and request macos permissions to accessibility, full disk access and screen recording."
 repository = "https://github.com/ayangweb/tauri-plugin-macos-permissions"
