@@ -1,6 +1,6 @@
 {
   "name": "tauri-plugin-macos-permissions-api",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "ayangweb",
   "description": "Check and request macos permissions to accessibility, full disk access and screen recording.",
   "keywords": [
