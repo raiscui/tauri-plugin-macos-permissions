@@ -4,7 +4,7 @@
 
 Support for checking and requesting macos system permissions.
 
-https://github.com/user-attachments/assets/73d13bff-e7f8-47d4-98d8-3692de852760
+https://github.com/user-attachments/assets/acb63744-9773-420a-8a96-6a485c94f5d6
 
 ## Install
 
