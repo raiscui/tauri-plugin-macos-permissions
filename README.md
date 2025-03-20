@@ -2,7 +2,7 @@
 
 > This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
 
-Check and request macos permissions to accessibility, full disk access and screen recording.
+Support for checking and requesting macos system permissions.
 
 https://github.com/user-attachments/assets/73d13bff-e7f8-47d4-98d8-3692de852760
 
@@ -43,6 +43,22 @@ pub fn run() {
 }
 ```
 
+If you need to access the microphone or camera permissions, please update `src-tauri/Info.plist`：
+
+```diff
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+     ...
++    <key>NSMicrophoneUsageDescription</key>
++    <string>Describe why your app needs to use microphone permission</string>
++    <key>NSCameraUsageDescription</key>
++    <string>Describe why your app needs to use camera permissions</string>
+</dict>
+</plist>
+```
+
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```ts
@@ -64,6 +80,8 @@ console.log(authorized); // true
 | `requestScreenRecordingPermission` | Request screen recording permission. |
 | `checkMicrophonePermission`        | Check microphone permission.         |
 | `requestMicrophonePermission`      | Request microphone permission.       |
+| `checkCameraPermission`            | Check camera permission.             |
+| `requestCameraPermission`          | Request camera permission.           |
 
 ## Example
 
@@ -91,6 +109,10 @@ pnpm tauri dev
 
 - Use [core-graphics](https://crates.io/crates/core-graphics) to check and request screen recording permission.
 
+- Use [objc2](https://github.com/madsmtm/objc2) to check and request microphone or camera permissions.
+
 ## Who's Use It
 
 - [EcoPaste](https://github.com/EcoPasteHub/EcoPaste) - Open source cross-platform clipboard management tool.
+
+- [Coco AI](https://github.com/infinilabs/coco-app) - Search, Connect, Collaborate, Your Personal AI Search and Assistant, all in one space.
