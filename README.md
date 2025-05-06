@@ -115,4 +115,6 @@ pnpm tauri dev
 
 - [EcoPaste](https://github.com/EcoPasteHub/EcoPaste) - Open source cross-platform clipboard management tool.
 
+- [BongoCat](https://github.com/ayangweb/BongoCat) - Open source cross-platform desktop pets.
+
 - [Coco AI](https://github.com/infinilabs/coco-app) - Search, Connect, Collaborate, Your Personal AI Search and Assistant, all in one space.
