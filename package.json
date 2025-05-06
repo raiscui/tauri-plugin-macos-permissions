@@ -11,7 +11,8 @@
     "full-disk-access",
     "screen-recording",
     "microphone",
-    "camera"
+    "camera",
+    "input-monitoring"
   ],
   "repository": {
     "type": "git",

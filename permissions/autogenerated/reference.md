@@ -2,6 +2,8 @@
 
 Default permissions for the plugin
 
+#### This default permission set includes the following:
+
 - `allow-check-accessibility-permission`
 - `allow-request-accessibility-permission`
 - `allow-check-full-disk-access-permission`
