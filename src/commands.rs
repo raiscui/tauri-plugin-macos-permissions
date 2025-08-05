@@ -1,4 +1,8 @@
-use tauri::{command, AppHandle, Runtime};
+use crate::{PhotoKitAccessLevel, PhotoKitAuthorizationStatus, PhotoKitPermissionManager};
+use tauri::{command, AppHandle, Runtime, State};
+
+#[cfg(target_os = "macos")]
+use crate::{ListenerInfo, PhotoKitPermissionListener};
 
 #[cfg(target_os = "macos")]
 use {
@@ -309,4 +313,206 @@ pub async fn request_input_monitoring_permission() -> Result<(), String> {
     }
 
     Ok(())
+}
+
+/// Check PhotoKit permission for the specified access level.
+///
+/// # Arguments
+/// * `access_level` - The PhotoKit access level to check
+///
+/// # Returns
+/// - `PhotoKitAuthorizationStatus`: The current authorization status for the specified access level
+///
+/// # Example
+/// ```javascript
+/// import { invoke } from '@tauri-apps/api/tauri';
+///
+/// const status = await invoke('check_photokit_permission', {
+///     accessLevel: 'read'
+/// });
+/// console.log('权限状态:', status); // "authorized" | "denied" | "notDetermined" | ...
+/// ```
+#[command]
+pub async fn check_photokit_permission(
+    access_level: PhotoKitAccessLevel,
+) -> PhotoKitAuthorizationStatus {
+    let manager = PhotoKitPermissionManager::new(None);
+
+    match manager.check_authorization_status(access_level) {
+        Ok(status) => status,
+        Err(_) => {
+            // 在错误情况下，返回未确定状态
+            PhotoKitAuthorizationStatus::NotDetermined
+        }
+    }
+}
+
+/// Request PhotoKit permission for the specified access level.
+///
+/// This will show the system permission dialog if the permission has not been determined yet.
+///
+/// # Arguments
+/// * `access_level` - The PhotoKit access level to request
+///
+/// # Returns
+/// - `Result<PhotoKitAuthorizationStatus, String>`: The authorization status after user response, or error message
+///
+/// # Example
+/// ```javascript
+/// import { invoke } from '@tauri-apps/api/tauri';
+///
+/// try {
+///     const status = await invoke('request_photokit_permission', {
+///         accessLevel: 'readWrite'
+///     });
+///
+///     if (status === 'authorized') {
+///         console.log('权限已授予');
+///     } else {
+///         console.log('权限被拒绝或受限:', status);
+///     }
+/// } catch (error) {
+///     console.error('请求权限失败:', error);
+/// }
+/// ```
+#[command]
+pub async fn request_photokit_permission(
+    access_level: PhotoKitAccessLevel,
+) -> Result<PhotoKitAuthorizationStatus, String> {
+    let manager = PhotoKitPermissionManager::new(None);
+
+    manager
+        .request_authorization(access_level)
+        .map_err(|e| e.to_string())
+}
+
+/// Register a PhotoKit permission status listener.
+///
+/// This creates a listener that will emit events when the PhotoKit permission status changes
+/// for the specified access level.
+///
+/// # Arguments
+/// * `app_handle` - The Tauri application handle
+/// * `access_level` - The PhotoKit access level to monitor
+///
+/// # Returns
+/// - `Result<String, String>`: The listener ID on success, or error message on failure
+///
+/// # Example
+/// ```javascript
+/// import { invoke, listen } from '@tauri-apps/api';
+///
+/// // 注册监听器
+/// const listenerId = await invoke('register_photokit_permission_listener', {
+///     accessLevel: 'read'
+/// });
+///
+/// // 监听权限状态变化事件
+/// const unlisten = await listen('photokit-permission-changed', (event) => {
+///     console.log('权限状态变化:', event.payload);
+/// });
+///
+/// // 稍后注销监听器
+/// await invoke('unregister_photokit_permission_listener', {
+///     listenerId: listenerId
+/// });
+/// ```
+#[command]
+pub async fn register_photokit_permission_listener<R: Runtime>(
+    app_handle: AppHandle<R>,
+    access_level: PhotoKitAccessLevel,
+) -> Result<String, String> {
+    #[cfg(target_os = "macos")]
+    {
+        let listener = PhotoKitPermissionListener::new(app_handle);
+        listener
+            .register_listener(access_level)
+            .map_err(|e| e.to_string())
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        // 在非 macOS 平台上，返回一个模拟的监听器 ID
+        use uuid::Uuid;
+        Ok(Uuid::new_v4().to_string())
+    }
+}
+
+/// Unregister a PhotoKit permission status listener.
+///
+/// This removes a previously registered listener and stops monitoring permission changes.
+///
+/// # Arguments
+/// * `app_handle` - The Tauri application handle
+/// * `listener_id` - The ID of the listener to unregister
+///
+/// # Returns
+/// - `Result<(), String>`: Success or error message
+///
+/// # Example
+/// ```javascript
+/// import { invoke } from '@tauri-apps/api';
+///
+/// // 注销监听器
+/// try {
+///     await invoke('unregister_photokit_permission_listener', {
+///         listenerId: 'your-listener-id'
+///     });
+///     console.log('监听器已注销');
+/// } catch (error) {
+///     console.error('注销监听器失败:', error);
+/// }
+/// ```
+#[command]
+pub async fn unregister_photokit_permission_listener<R: Runtime>(
+    app_handle: AppHandle<R>,
+    listener_id: String,
+) -> Result<(), String> {
+    #[cfg(target_os = "macos")]
+    {
+        let listener = PhotoKitPermissionListener::new(app_handle);
+        listener
+            .unregister_listener(&listener_id)
+            .map_err(|e| e.to_string())
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        // 在非 macOS 平台上，这是一个空操作
+        Ok(())
+    }
+}
+
+/// Get all active PhotoKit permission listeners.
+///
+/// This returns information about all currently registered permission listeners.
+///
+/// # Arguments
+/// * `app_handle` - The Tauri application handle
+///
+/// # Returns
+/// - `Result<Vec<ListenerInfo>, String>`: List of active listeners or error message
+///
+/// # Example
+/// ```javascript
+/// import { invoke } from '@tauri-apps/api';
+///
+/// const listeners = await invoke('get_photokit_permission_listeners');
+/// console.log('活跃的监听器:', listeners);
+/// ```
+#[command]
+pub async fn get_photokit_permission_listeners<R: Runtime>(
+    app_handle: AppHandle<R>,
+) -> Result<Vec<ListenerInfo>, String> {
+    #[cfg(target_os = "macos")]
+    {
+        let listener = PhotoKitPermissionListener::new(app_handle);
+        listener.get_active_listeners().map_err(|e| e.to_string())
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        // 在非 macOS 平台上，返回空列表
+        Ok(vec![])
+    }
 }

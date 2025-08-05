@@ -7,13 +7,25 @@ use tauri::{
 
 mod commands;
 
+#[cfg(target_os = "macos")]
+mod photokit_bridge;
+
+mod photokit_manager;
+
+#[cfg(target_os = "macos")]
+mod photokit_listener;
+
 pub use commands::*;
+pub use photokit_manager::*;
+
+#[cfg(target_os = "macos")]
+pub use photokit_listener::*;
 
 /// PhotoKit 访问权限级别
 ///
 /// 定义了应用可以请求的不同级别的照片库访问权限。
 /// 这些级别对应于 macOS PhotoKit 框架中的 PHAccessLevel 枚举。
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum PhotoKitAccessLevel {
     /// 只读权限 - 可以读取照片和视频，但不能修改或删除
     /// 对应 PHAccessLevelRead
@@ -197,7 +209,12 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             commands::check_camera_permission,
             commands::request_camera_permission,
             commands::check_input_monitoring_permission,
-            commands::request_input_monitoring_permission
+            commands::request_input_monitoring_permission,
+            commands::check_photokit_permission,
+            commands::request_photokit_permission,
+            commands::register_photokit_permission_listener,
+            commands::unregister_photokit_permission_listener,
+            commands::get_photokit_permission_listeners
         ])
         .build()
 }

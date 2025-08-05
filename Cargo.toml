@@ -21,6 +21,7 @@ links = "tauri-plugin-macos-permissions"
 tauri = { version = "2" }
 serde = "1"
 thiserror = "2"
+uuid = { version = "1.0", features = ["v4"] }
 
 [dev-dependencies]
 serde_json = "1"
