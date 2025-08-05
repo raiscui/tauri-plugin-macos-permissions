@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-unregister-photokit-permission-listener"
+description = "Enables the unregister_photokit_permission_listener command without any pre-configured scope."
+commands.allow = ["unregister_photokit_permission_listener"]
+
+[[permission]]
+identifier = "deny-unregister-photokit-permission-listener"
+description = "Denies the unregister_photokit_permission_listener command without any pre-configured scope."
+commands.deny = ["unregister_photokit_permission_listener"]

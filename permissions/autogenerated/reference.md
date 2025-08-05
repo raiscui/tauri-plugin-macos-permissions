@@ -16,6 +16,11 @@ Default permissions for the plugin
 - `allow-request-camera-permission`
 - `allow-check-input-monitoring-permission`
 - `allow-request-input-monitoring-permission`
+- `allow-check-photokit-permission`
+- `allow-request-photokit-permission`
+- `allow-register-photokit-permission-listener`
+- `allow-unregister-photokit-permission-listener`
+- `allow-get-photokit-permission-listeners`
 
 ## Permission Table
 
@@ -159,6 +164,32 @@ Denies the check_microphone_permission command without any pre-configured scope.
 <tr>
 <td>
 
+`macos-permissions:allow-check-photokit-permission`
+
+</td>
+<td>
+
+Enables the check_photokit_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-check-photokit-permission`
+
+</td>
+<td>
+
+Denies the check_photokit_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `macos-permissions:allow-check-screen-recording-permission`
 
 </td>
@@ -178,6 +209,58 @@ Enables the check_screen_recording_permission command without any pre-configured
 <td>
 
 Denies the check_screen_recording_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:allow-get-photokit-permission-listeners`
+
+</td>
+<td>
+
+Enables the get_photokit_permission_listeners command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-get-photokit-permission-listeners`
+
+</td>
+<td>
+
+Denies the get_photokit_permission_listeners command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:allow-register-photokit-permission-listener`
+
+</td>
+<td>
+
+Enables the register_photokit_permission_listener command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-register-photokit-permission-listener`
+
+</td>
+<td>
+
+Denies the register_photokit_permission_listener command without any pre-configured scope.
 
 </td>
 </tr>
@@ -315,6 +398,32 @@ Denies the request_microphone_permission command without any pre-configured scop
 <tr>
 <td>
 
+`macos-permissions:allow-request-photokit-permission`
+
+</td>
+<td>
+
+Enables the request_photokit_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-request-photokit-permission`
+
+</td>
+<td>
+
+Denies the request_photokit_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `macos-permissions:allow-request-screen-recording-permission`
 
 </td>
@@ -334,6 +443,32 @@ Enables the request_screen_recording_permission command without any pre-configur
 <td>
 
 Denies the request_screen_recording_permission command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:allow-unregister-photokit-permission-listener`
+
+</td>
+<td>
+
+Enables the unregister_photokit_permission_listener command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-unregister-photokit-permission-listener`
+
+</td>
+<td>
+
+Denies the unregister_photokit_permission_listener command without any pre-configured scope.
 
 </td>
 </tr>

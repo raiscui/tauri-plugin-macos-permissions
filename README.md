@@ -2,7 +2,7 @@
 
 > This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
 
-Support for checking and requesting macos system permissions.
+Support for checking and requesting macOS system permissions, including traditional permissions and PhotoKit photo library access permissions.
 
 https://github.com/user-attachments/assets/acb63744-9773-420a-8a96-6a485c94f5d6
 
@@ -43,7 +43,7 @@ pub fn run() {
 }
 ```
 
-If you need to access the microphone or camera permissions, please update `src-tauri/Info.plist`：
+If you need to access the microphone, camera, or PhotoKit permissions, please update `src-tauri/Info.plist`：
 
 ```diff
 <?xml version="1.0" encoding="UTF-8"?>
@@ -55,6 +55,8 @@ If you need to access the microphone or camera permissions, please update `src-t
 +    <string>Describe why your app needs to use microphone permission</string>
 +    <key>NSCameraUsageDescription</key>
 +    <string>Describe why your app needs to use camera permissions</string>
++    <key>NSPhotoLibraryUsageDescription</key>
++    <string>Describe why your app needs to access the photo library</string>
 </dict>
 </plist>
 ```
@@ -62,13 +64,28 @@ If you need to access the microphone or camera permissions, please update `src-t
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```ts
-import { checkAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
+import {
+  checkAccessibilityPermission,
+  checkPhotoKitPermission,
+  requestPhotoKitPermission
+} from "tauri-plugin-macos-permissions-api";
 
+// Check traditional permissions
 const authorized = await checkAccessibilityPermission();
 console.log(authorized); // true
+
+// Check PhotoKit permissions
+const photoStatus = await checkPhotoKitPermission('read');
+console.log(photoStatus); // "authorized" | "denied" | "notDetermined" | ...
+
+// Request PhotoKit permissions
+const newStatus = await requestPhotoKitPermission('readWrite');
+console.log(newStatus); // "authorized" | "denied" | ...
 ```
 
 ## Methods
+
+### Traditional Permissions
 
 | Method                             | Description                          |
 | ---------------------------------- | ------------------------------------ |
@@ -84,6 +101,30 @@ console.log(authorized); // true
 | `requestCameraPermission`          | Request camera permission.           |
 | `checkInputMonitoringPermission`   | Check input monitoring permission.   |
 | `requestInputMonitoringPermission` | Request input monitoring permission. |
+
+### PhotoKit Permissions
+
+| Method                                             | Description                                             |
+| -------------------------------------------------- | ------------------------------------------------------- |
+| `checkPhotoKitPermission(accessLevel)`             | Check PhotoKit permission for specified access level.   |
+| `requestPhotoKitPermission(accessLevel)`           | Request PhotoKit permission for specified access level. |
+| `registerPhotoKitPermissionListener(accessLevel)`  | Register a listener for PhotoKit permission changes.    |
+| `unregisterPhotoKitPermissionListener(listenerId)` | Unregister a PhotoKit permission listener.              |
+| `getPhotoKitPermissionListeners()`                 | Get all active PhotoKit permission listeners.           |
+
+#### PhotoKit Access Levels
+
+- `'read'` - Read-only access to the photo library
+- `'readWrite'` - Read and write access to the photo library
+- `'addOnly'` - Add-only access to the photo library
+
+#### PhotoKit Authorization Status
+
+- `'notDetermined'` - Permission has not been requested yet
+- `'restricted'` - Permission is restricted (e.g., by parental controls)
+- `'denied'` - Permission has been denied by the user
+- `'authorized'` - Permission has been granted
+- `'limited'` - Limited access has been granted (iOS 14+ feature)
 
 ## Example
 
@@ -109,7 +150,7 @@ pnpm tauri dev
 
 - Use [FullDiskAccess](https://github.com/inket/FullDiskAccess/blob/846e04ea2b84fce843f47d7e7f3421189221829c/Sources/FullDiskAccess/FullDiskAccess.swift#L46) to check full disk access permission.
 
-- Use [objc2](https://github.com/madsmtm/objc2) to check and request microphone or camera permissions.
+- Use [objc2](https://github.com/madsmtm/objc2) to check and request microphone, camera, and PhotoKit permissions.
 
 ## Who's Use It
 

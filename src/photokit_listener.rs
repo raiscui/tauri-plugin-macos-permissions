@@ -6,7 +6,7 @@
 use crate::{PermissionStatusChangeEvent, PhotoKitAccessLevel, PhotoKitAuthorizationStatus};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use tauri::{AppHandle, Emitter, Manager, Runtime};
+use tauri::{AppHandle, Emitter, Runtime};
 use uuid::Uuid;
 
 /// 监听器错误类型

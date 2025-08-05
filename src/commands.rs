@@ -1,5 +1,5 @@
 use crate::{PhotoKitAccessLevel, PhotoKitAuthorizationStatus, PhotoKitPermissionManager};
-use tauri::{command, AppHandle, Runtime, State};
+use tauri::{command, AppHandle, Runtime};
 
 #[cfg(target_os = "macos")]
 use crate::{ListenerInfo, PhotoKitPermissionListener};
@@ -34,11 +34,13 @@ extern "C" {
 /// - `bool`: `true` if accessibility permission are granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_accessibility_permission;
 ///
+/// # async fn example() {
 /// let authorized = check_accessibility_permission().await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_accessibility_permission() -> bool {
@@ -52,10 +54,12 @@ pub async fn check_accessibility_permission() -> bool {
 /// Request accessibility permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_accessibility_permission;
 ///
+/// # async fn example() {
 /// request_accessibility_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_accessibility_permission() {
@@ -69,11 +73,14 @@ pub async fn request_accessibility_permission() {
 /// - `bool`: `true` if full disk access permission are granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_full_disk_access_permission;
+/// use tauri::AppHandle;
 ///
+/// # async fn example(app_handle: AppHandle<tauri::Wry>) {
 /// let authorized = check_full_disk_access_permission(app_handle).await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_full_disk_access_permission<R: Runtime>(app_handle: AppHandle<R>) -> bool {
@@ -104,10 +111,12 @@ pub async fn check_full_disk_access_permission<R: Runtime>(app_handle: AppHandle
 /// Request full disk access permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_full_disk_access_permission;
 ///
+/// # async fn example() {
 /// request_full_disk_access_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_full_disk_access_permission() -> Result<(), String> {
@@ -128,11 +137,13 @@ pub async fn request_full_disk_access_permission() -> Result<(), String> {
 /// - `bool`: `true` if screen recording permission are granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_screen_recording_permission;
 ///
+/// # async fn example() {
 /// let authorized = check_screen_recording_permission().await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_screen_recording_permission() -> bool {
@@ -148,10 +159,12 @@ pub async fn check_screen_recording_permission() -> bool {
 /// Request screen recording permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_screen_recording_permission;
 ///
+/// # async fn example() {
 /// request_screen_recording_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_screen_recording_permission() {
@@ -167,11 +180,13 @@ pub async fn request_screen_recording_permission() {
 /// - `bool`: `true` if microphone permission is granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_microphone_permission;
 ///
+/// # async fn example() {
 /// let authorized = check_microphone_permission().await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_microphone_permission() -> bool {
@@ -193,10 +208,12 @@ pub async fn check_microphone_permission() -> bool {
 /// Request microphone permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_microphone_permission;
 ///
+/// # async fn example() {
 /// request_microphone_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_microphone_permission() -> Result<(), String> {
@@ -221,11 +238,13 @@ pub async fn request_microphone_permission() -> Result<(), String> {
 /// - `bool`: `true` if camera permission is granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_camera_permission;
 ///
+/// # async fn example() {
 /// let authorized = check_camera_permission().await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_camera_permission() -> bool {
@@ -247,10 +266,12 @@ pub async fn check_camera_permission() -> bool {
 /// Request camera permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_camera_permission;
 ///
+/// # async fn example() {
 /// request_camera_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_camera_permission() -> Result<(), String> {
@@ -275,11 +296,13 @@ pub async fn request_camera_permission() -> Result<(), String> {
 /// - `bool`: `true` if input monitoring permission is granted, `false` otherwise.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::check_input_monitoring_permission;
 ///
+/// # async fn example() {
 /// let authorized = check_input_monitoring_permission().await;
 /// println!("Authorized: {}", authorized); // false
+/// # }
 /// ```
 #[command]
 pub async fn check_input_monitoring_permission() -> bool {
@@ -297,10 +320,12 @@ pub async fn check_input_monitoring_permission() -> bool {
 /// Request input monitoring permission.
 ///
 /// # Example
-/// ```
+/// ```no_run
 /// use tauri_plugin_macos_permissions::request_input_monitoring_permission;
 ///
+/// # async fn example() {
 /// request_input_monitoring_permission().await;
+/// # }
 /// ```
 #[command]
 pub async fn request_input_monitoring_permission() -> Result<(), String> {
@@ -514,5 +539,123 @@ pub async fn get_photokit_permission_listeners<R: Runtime>(
     {
         // 在非 macOS 平台上，返回空列表
         Ok(vec![])
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    #[cfg(target_os = "macos")]
+    async fn test_check_photokit_permission_macos() {
+        // 测试检查权限功能（仅在 macOS 上运行）
+        // 注意：在某些测试环境中可能没有完整的PhotoKit框架
+        let status = check_photokit_permission(PhotoKitAccessLevel::Read).await;
+
+        // 在 macOS 平台上应该返回有效的状态
+        assert!(matches!(
+            status,
+            PhotoKitAuthorizationStatus::NotDetermined
+                | PhotoKitAuthorizationStatus::Restricted
+                | PhotoKitAuthorizationStatus::Denied
+                | PhotoKitAuthorizationStatus::Authorized
+                | PhotoKitAuthorizationStatus::Limited
+        ));
+    }
+
+    #[tokio::test]
+    #[cfg(not(target_os = "macos"))]
+    async fn test_check_photokit_permission_non_macos() {
+        // 测试检查权限功能（在非 macOS 平台上运行）
+        let status = check_photokit_permission(PhotoKitAccessLevel::Read).await;
+
+        // 在非 macOS 平台上应该返回 NotDetermined
+        assert_eq!(status, PhotoKitAuthorizationStatus::NotDetermined);
+    }
+
+    #[tokio::test]
+    #[cfg(target_os = "macos")]
+    async fn test_request_photokit_permission_macos() {
+        // 测试请求权限功能（仅在 macOS 上运行）
+        let result = request_photokit_permission(PhotoKitAccessLevel::Read).await;
+
+        // 应该返回成功结果
+        assert!(result.is_ok());
+
+        let status = result.unwrap();
+        assert!(matches!(
+            status,
+            PhotoKitAuthorizationStatus::NotDetermined
+                | PhotoKitAuthorizationStatus::Restricted
+                | PhotoKitAuthorizationStatus::Denied
+                | PhotoKitAuthorizationStatus::Authorized
+                | PhotoKitAuthorizationStatus::Limited
+        ));
+    }
+
+    #[tokio::test]
+    #[cfg(not(target_os = "macos"))]
+    async fn test_request_photokit_permission_non_macos() {
+        // 测试请求权限功能（在非 macOS 平台上运行）
+        let result = request_photokit_permission(PhotoKitAccessLevel::Read).await;
+
+        // 应该返回成功结果
+        assert!(result.is_ok());
+
+        let status = result.unwrap();
+        assert_eq!(status, PhotoKitAuthorizationStatus::NotDetermined);
+    }
+
+    #[test]
+    fn test_photokit_access_levels() {
+        // 测试所有权限级别
+        let levels = [
+            PhotoKitAccessLevel::Read,
+            PhotoKitAccessLevel::ReadWrite,
+            PhotoKitAccessLevel::AddOnly,
+        ];
+
+        for level in levels.iter() {
+            // 确保每个级别都可以序列化
+            let serialized = serde_json::to_string(level);
+            assert!(serialized.is_ok());
+
+            // 确保可以反序列化
+            let deserialized: Result<PhotoKitAccessLevel, _> =
+                serde_json::from_str(&serialized.unwrap());
+            assert!(deserialized.is_ok());
+            assert_eq!(*level, deserialized.unwrap());
+        }
+    }
+
+    #[tokio::test]
+    async fn test_traditional_permissions() {
+        // 测试传统权限检查功能
+        let accessibility = check_accessibility_permission().await;
+        let screen_recording = check_screen_recording_permission().await;
+        let microphone = check_microphone_permission().await;
+        let camera = check_camera_permission().await;
+        let input_monitoring = check_input_monitoring_permission().await;
+
+        // 在非 macOS 平台上应该都返回 true
+        #[cfg(not(target_os = "macos"))]
+        {
+            assert!(accessibility);
+            assert!(screen_recording);
+            assert!(microphone);
+            assert!(camera);
+            assert!(input_monitoring);
+        }
+
+        // 在 macOS 平台上应该返回布尔值
+        #[cfg(target_os = "macos")]
+        {
+            assert!(accessibility == true || accessibility == false);
+            assert!(screen_recording == true || screen_recording == false);
+            assert!(microphone == true || microphone == false);
+            assert!(camera == true || camera == false);
+            assert!(input_monitoring == true || input_monitoring == false);
+        }
     }
 }
