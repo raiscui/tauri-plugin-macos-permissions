@@ -21,10 +21,14 @@ const COMMANDS: &[&str] = &[
 fn main() {
     tauri_plugin::Builder::new(COMMANDS).build();
 
-    // 在 macOS 上链接 PhotoKit 框架
+    // 测试：PhotoKit可能不需要显式链接，就像AVFoundation一样
+    // 原项目没有链接任何框架，AVFoundation和CoreGraphics都是自动链接的
+    // 让我们测试PhotoKit是否也是自动链接的
     #[cfg(target_os = "macos")]
     {
-        println!("cargo:rustc-link-lib=framework=Photos");
-        println!("cargo:rustc-link-lib=framework=PhotosUI");
+        // 暂时注释掉显式链接，测试是否需要
+        // println!("cargo:rustc-link-lib=framework=Photos");
+        // println!("cargo:rustc-link-lib=framework=PhotosUI");
+        println!("cargo:warning=测试PhotoKit自动链接");
     }
 }

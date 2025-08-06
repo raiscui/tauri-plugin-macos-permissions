@@ -76,8 +76,10 @@ impl PhotoKitBridge {
 
     /// 请求指定权限级别的授权
     ///
-    /// 注意：此方法会触发系统权限对话框，但由于 Objective-C 回调的复杂性，
-    /// 当前实现返回请求后的状态检查结果。
+    /// 此方法会触发系统权限对话框。
+    ///
+    /// 重要发现：PhotoKit的API可能与AVFoundation不同！
+    /// 让我们尝试使用更直接的方法，参考Apple官方文档。
     ///
     /// # Arguments
     /// * `access_level` - 要请求的权限级别
@@ -95,23 +97,20 @@ impl PhotoKitBridge {
         let result = std::panic::catch_unwind(|| unsafe {
             // 检查 PHPhotoLibrary 类是否可用
             let ph_photo_library_class = class!(PHPhotoLibrary);
-
-            // 调用 PHPhotoLibrary.requestAuthorizationForAccessLevel:handler:
-            // 使用空的完成处理器，因为我们将通过轮询检查状态
             let access_level_value = access_level.to_native_value();
 
-            // 定义一个简单的空回调
+            // 使用标准的PhotoKit权限请求API
             type CompletionBlock = Option<extern "C" fn(i32)>;
             let completion_block: CompletionBlock = None;
 
+            // 调用PhotoKit权限请求API
             let _: () = msg_send![
                 ph_photo_library_class,
                 requestAuthorizationForAccessLevel: access_level_value,
                 handler: completion_block
             ];
 
-            // 触发权限请求后，立即检查当前状态
-            // 注意：实际的权限状态可能需要用户交互后才会更新
+            // 立即检查当前状态
             self.check_authorization_status(access_level)
         });
 
