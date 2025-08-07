@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 图片资源访问权限 -->
+    <key>com.apple.security.assets.pictures.read-write</key>
+    <true/>
+
+    <!-- PhotoKit照片库访问权限 -->
+    <key>com.apple.security.personal-information.photos-library</key>
+    <true/>
+
+    <!-- 沙盒环境 -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+
+    <!-- 用户选择的文件访问 -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+
+    <!-- 网络访问（Tauri需要） -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+</dict>
+</plist>
