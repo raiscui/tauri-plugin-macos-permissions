@@ -1,5 +1,5 @@
 [package]
-name = "tauri-plugin-macos-permissions"
+name = "tauri-plugin-macos-permissions-with-photokit"
 version = "2.3.1"
 authors = ["ayangweb", "rais"]
 description = "Support for checking and requesting macos system permissions."
