@@ -132,6 +132,56 @@ impl PhotoKitBridge {
         // 这里我们简单返回 true，实际的可用性检查在具体方法调用时进行
         true
     }
+
+    /// 获取照片库中的总照片数量
+    ///
+    /// 此方法会查询照片库中所有图片类型的资源数量。
+    /// 需要用户已授予读取权限才能成功查询。
+    ///
+    /// # Returns
+    /// 返回照片库中的总照片数量
+    ///
+    /// # Errors
+    /// 如果 PhotoKit 框架不可用或没有权限，返回错误
+    pub fn get_photos_count(&self) -> Result<u64, PhotoKitBridgeError> {
+        // 首先检查是否有读取权限
+        let auth_status = self.check_authorization_status(PhotoKitAccessLevel::Read)?;
+        if !auth_status.is_authorized() {
+            return Err(PhotoKitBridgeError::RequestFailed(
+                "需要照片库读取权限才能查询照片数量".to_string(),
+            ));
+        }
+
+        // 使用 std::panic::catch_unwind 来捕获可能的 panic
+        let result = std::panic::catch_unwind(|| unsafe {
+            // 获取 PHAsset 类
+            let ph_asset_class = class!(PHAsset);
+
+            // 直接查询所有图片资源，不使用复杂的过滤器
+            // 调用 PHAsset.fetchAssetsWithMediaType:options:
+            let media_type: i32 = 1; // PHAssetMediaTypeImage
+            let fetch_result: *mut objc2::runtime::AnyObject = msg_send![
+                ph_asset_class,
+                fetchAssetsWithMediaType: media_type,
+                options: std::ptr::null::<objc2::runtime::AnyObject>()
+            ];
+
+            // 获取数量
+            let count: u64 = msg_send![fetch_result, count];
+
+            Ok(count)
+        });
+
+        match result {
+            Ok(count_result) => count_result,
+            Err(_) => {
+                // 如果调用失败，返回错误
+                Err(PhotoKitBridgeError::RequestFailed(
+                    "查询照片数量失败".to_string(),
+                ))
+            }
+        }
+    }
 }
 
 impl Default for PhotoKitBridge {

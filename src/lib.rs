@@ -214,7 +214,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             commands::request_photokit_permission,
             commands::register_photokit_permission_listener,
             commands::unregister_photokit_permission_listener,
-            commands::get_photokit_permission_listeners
+            commands::get_photokit_permission_listeners,
+            commands::get_photos_count
         ])
         .build()
 }

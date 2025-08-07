@@ -1,6 +1,7 @@
 import { useCreation, useMount, useReactive } from "ahooks";
 import { Button, Flex, List, Typography, Card, Space, Tag, message } from "antd";
 import { listen } from '@tauri-apps/api/event';
+import { info, error as logError, debug, warn, trace } from '@tauri-apps/plugin-log';
 import {
     checkAccessibilityPermission,
     checkFullDiskAccessPermission,
@@ -19,6 +20,7 @@ import {
     registerPhotoKitPermissionListener,
     unregisterPhotoKitPermissionListener,
     getPhotoKitPermissionListeners,
+    getPhotosCount,
     type PhotoKitAccessLevel,
     type PhotoKitAuthorizationStatus,
     type ListenerInfo,
@@ -43,10 +45,20 @@ const App = () => {
             readWrite: null as string | null,
             addOnly: null as string | null,
         } as Record<PhotoKitAccessLevel, string | null>,
+        // 照片数量
+        photosCount: 0,
+        photosCountLoading: false,
     });
 
     useMount(async () => {
+        // 测试不同级别的日志记录
+        trace("🔍 TRACE: 应用组件开始挂载");
+        debug("🐛 DEBUG: 开始初始化权限检查");
+        info("ℹ️ INFO: 应用启动，开始检查权限状态");
+        warn("⚠️ WARN: 这是一个警告级别的测试日志");
+
         // 检查传统权限
+        debug("🔍 检查传统权限...");
         state.accessibilityPermission = await checkAccessibilityPermission();
         state.fullDiskAccessPermission = await checkFullDiskAccessPermission();
         state.screenRecordingPermission = await checkScreenRecordingPermission();
@@ -54,30 +66,50 @@ const App = () => {
         state.cameraPermission = await checkCameraPermission();
         state.inputMonitoringPermission = await checkInputMonitoringPermission();
 
+        info(`✅ 传统权限检查完成:
+            辅助功能: ${state.accessibilityPermission},
+            完全磁盘访问: ${state.fullDiskAccessPermission},
+            屏幕录制: ${state.screenRecordingPermission},
+            麦克风: ${state.microphonePermission},
+            摄像头: ${state.cameraPermission},
+            输入监控: ${state.inputMonitoringPermission}`);
+
         // 检查 PhotoKit 权限
         try {
+            debug("检查 PhotoKit 权限...");
             state.photoKitReadPermission = await checkPhotoKitPermission("read");
             state.photoKitReadWritePermission = await checkPhotoKitPermission("readWrite");
             state.photoKitAddOnlyPermission = await checkPhotoKitPermission("addOnly");
 
+            info(`PhotoKit 权限检查完成:
+                读取: ${state.photoKitReadPermission},
+                读写: ${state.photoKitReadWritePermission},
+                仅添加: ${state.photoKitAddOnlyPermission}`);
+
             // 获取活跃的监听器
             state.activeListeners = await getPhotoKitPermissionListeners();
+            info(`获取到 ${state.activeListeners.length} 个活跃监听器`);
         } catch (error) {
             console.error("检查 PhotoKit 权限失败:", error);
+            logError(`检查 PhotoKit 权限失败: ${error}`);
             message.error("检查 PhotoKit 权限失败");
         }
 
         // 设置 PhotoKit 权限变化监听
         try {
+            info("设置 PhotoKit 权限变化监听");
             await listen('photokit-permission-changed', (event) => {
                 console.log('PhotoKit 权限状态变化:', event.payload);
+                info(`PhotoKit 权限状态变化: ${JSON.stringify(event.payload)}`);
                 message.info(`PhotoKit 权限状态已更新: ${JSON.stringify(event.payload)}`);
 
                 // 重新检查权限状态
                 refreshPhotoKitPermissions();
             });
+            info("PhotoKit 权限变化监听设置成功");
         } catch (error) {
             console.error("设置 PhotoKit 权限监听失败:", error);
+            logError(`设置 PhotoKit 权限监听失败: ${error}`);
         }
     });
 
@@ -95,7 +127,9 @@ const App = () => {
 
     const requestPhotoKitPermissionWithLevel = async (accessLevel: PhotoKitAccessLevel) => {
         try {
+            info(`开始请求 PhotoKit ${accessLevel} 权限`);
             const status = await requestPhotoKitPermission(accessLevel);
+            info(`PhotoKit ${accessLevel} 权限请求完成，状态: ${status}`);
             message.success(`PhotoKit ${accessLevel} 权限请求完成: ${status}`);
 
             // 更新对应的权限状态
@@ -108,6 +142,7 @@ const App = () => {
             }
         } catch (error) {
             console.error(`请求 PhotoKit ${accessLevel} 权限失败:`, error);
+            logError(`请求 PhotoKit ${accessLevel} 权限失败: ${error}`);
             message.error(`请求 PhotoKit ${accessLevel} 权限失败`);
         }
     };
@@ -118,21 +153,44 @@ const App = () => {
 
             if (currentListenerId) {
                 // 注销监听器
+                info(`注销 PhotoKit ${accessLevel} 监听器: ${currentListenerId}`);
                 await unregisterPhotoKitPermissionListener(currentListenerId);
                 state.listenerIds[accessLevel] = null;
+                info(`PhotoKit ${accessLevel} 监听器已成功注销`);
                 message.success(`PhotoKit ${accessLevel} 监听器已注销`);
             } else {
                 // 注册监听器
+                info(`注册 PhotoKit ${accessLevel} 监听器`);
                 const listenerId = await registerPhotoKitPermissionListener(accessLevel);
                 state.listenerIds[accessLevel] = listenerId;
+                info(`PhotoKit ${accessLevel} 监听器已成功注册: ${listenerId}`);
                 message.success(`PhotoKit ${accessLevel} 监听器已注册: ${listenerId}`);
             }
 
             // 刷新监听器列表
             state.activeListeners = await getPhotoKitPermissionListeners();
+            debug(`刷新监听器列表，当前有 ${state.activeListeners.length} 个活跃监听器`);
         } catch (error) {
             console.error(`切换 PhotoKit ${accessLevel} 监听器失败:`, error);
+            logError(`切换 PhotoKit ${accessLevel} 监听器失败: ${error}`);
             message.error(`切换 PhotoKit ${accessLevel} 监听器失败`);
+        }
+    };
+
+    const queryPhotosCount = async () => {
+        try {
+            info("开始查询照片数量");
+            state.photosCountLoading = true;
+            const count = await getPhotosCount();
+            state.photosCount = count;
+            info(`照片数量查询成功: ${count} 张照片`);
+            message.success(`查询成功，共有 ${count} 张照片`);
+        } catch (error) {
+            console.error('查询照片数量失败:', error);
+            logError(`查询照片数量失败: ${error}`);
+            message.error('查询照片数量失败，请确保已授予读取权限');
+        } finally {
+            state.photosCountLoading = false;
         }
     };
 
@@ -393,6 +451,33 @@ const App = () => {
                         ) : (
                             <Typography.Text type="secondary">暂无活跃监听器</Typography.Text>
                         )}
+                    </Card>
+
+                    {/* 照片数量查询 */}
+                    <Card title="照片数量查询" size="small" type="inner">
+                        <Space direction="vertical" style={{ width: "100%" }}>
+                            <Flex justify="space-between" align="center">
+                                <Typography.Text strong>照片库总数量:</Typography.Text>
+                                <Space>
+                                    <Typography.Text type="secondary">
+                                        {state.photosCount} 张照片
+                                    </Typography.Text>
+                                    <Button
+                                        size="small"
+                                        onClick={queryPhotosCount}
+                                        loading={state.photosCountLoading}
+                                        disabled={state.photoKitReadPermission !== "authorized"}
+                                    >
+                                        查询数量
+                                    </Button>
+                                </Space>
+                            </Flex>
+                            {state.photoKitReadPermission !== "authorized" && (
+                                <Typography.Text type="warning" style={{ fontSize: "12px" }}>
+                                    需要先授予读取权限才能查询照片数量
+                                </Typography.Text>
+                            )}
+                        </Space>
                     </Card>
 
                     {/* 操作按钮 */}

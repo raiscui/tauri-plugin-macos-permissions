@@ -141,8 +141,27 @@ cd examples/tauri-app
 
 pnpm install
 
-pnpm tauri dev
+# 注意：权限功能需要使用构建后的应用测试，开发模式无法正确处理系统权限
+pnpm tauri build
+open src-tauri/target/release/bundle/macos/tauri-app.app
 ```
+
+## 故障排除
+
+### Command not allowed by ACL 错误
+
+如果遇到类似错误：
+```
+Command plugin:macos-permissions|[命令名] not allowed by ACL
+```
+
+请参考：
+- [详细解决方案](docs/troubleshooting/acl-command-not-allowed.md)
+- [快速修复指南](docs/quick-fixes/command-acl-error.md)
+
+**关键要点**：
+- 所有插件命令都必须在权限配置中声明
+- 权限测试必须使用构建后的应用，不能使用 `pnpm tauri dev`
 
 ## Thanks
 

@@ -20,4 +20,5 @@ permissions = [
     "allow-register-photokit-permission-listener",
     "allow-unregister-photokit-permission-listener",
     "allow-get-photokit-permission-listeners",
+    "allow-get-photos-count",
 ]

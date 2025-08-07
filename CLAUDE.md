@@ -1,7 +1,187 @@
+# CLAUDE.md
+
+## 项目概述
+
+Tauri v2 插件，专门用于 macOS 系统权限管理，支持传统权限和 PhotoKit 照片库权限的检查和请求。
+
+## 核心架构
+
+### 项目结构
+- `src/` - Rust 核心代码
+- `guest-js/` - JavaScript/TypeScript 绑定
+- `examples/tauri-app/` - 示例应用
+- `permissions/` - Tauri 权限定义
+- `dist-js/` - 构建后的 JS 绑定
+
+### 主要模块
+- `lib.rs` - 核心数据结构和插件初始化
+- `commands.rs` - Tauri 命令处理器
+- `photokit_bridge.rs` - PhotoKit 原生桥接（仅 macOS）
+- `photokit_manager.rs` - PhotoKit 权限管理器
+- `photokit_listener.rs` - PhotoKit 权限状态监听器
+
+## 开发命令
+
+### 前端开发
+```bash
+cd examples/tauri-app && pnpm install && pnpm dev && pnpm build
+```
+
+### Rust 开发
+```bash
+cargo build && cargo test && cargo check
+```
+
+### Tauri 开发
+```bash
+cd examples/tauri-app && pnpm tauri dev && pnpm tauri build
+```
+
+### JS 绑定构建
+```bash
+pnpm build  # 构建到 dist-js/
+```
+
+## 权限类型
+
+### 传统权限
+- **Accessibility** - 辅助功能
+- **Full Disk Access** - 完全磁盘访问
+- **Screen Recording** - 屏幕录制
+- **Microphone** - 麦克风
+- **Camera** - 摄像头
+- **Input Monitoring** - 输入监控
+
+### PhotoKit 权限
+- **Read** - 只读访问照片库
+- **ReadWrite** - 读写访问照片库
+- **AddOnly** - 仅添加照片到照片库
+
+## 使用方法
+
+### 1. Tauri 应用集成
+```rust
+tauri::Builder::default()
+    .plugin(tauri_plugin_macos_permissions::init())
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+```
+
+### 2. 权限配置
+```json
+{
+    "permissions": ["macos-permissions:default"]
+}
+```
+
+### 3. Info.plist 权限描述
+```xml
+<key>NSMicrophoneUsageDescription</key>
+<string>需要麦克风权限用于录音功能</string>
+<key>NSCameraUsageDescription</key>
+<string>需要摄像头权限用于视频通话</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>需要照片库权限用于图片管理</string>
+```
+
+### 4. 前端使用
+```typescript
+import {
+    checkAccessibilityPermission,
+    requestAccessibilityPermission,
+    checkPhotoKitPermission,
+    requestPhotoKitPermission
+} from "tauri-plugin-macos-permissions-api";
+
+// 检查和请求权限
+const hasAccessibility = await checkAccessibilityPermission();
+const photoStatus = await checkPhotoKitPermission('read');
+await requestAccessibilityPermission();
+```
+
+## 开发注意事项
+
+### macOS 特有功能
+- 仅适用于 macOS 平台
+- 使用 `#[cfg(target_os = "macos")]` 处理平台特定代码
+- PhotoKit 需要 macOS 10.15+
+
+### 权限状态监听
+- PhotoKit 支持实时状态监听
+- 使用 `registerPhotoKitPermissionListener` 注册监听器
+- 监听 `photokit-permission-changed` 事件
+
+### 错误处理
+- 处理用户拒绝情况
+- 处理 `restricted` 状态（家长控制）
+- 注意 `notDetermined` 状态（首次请求）
+
+### 线程安全
+- PhotoKit 监听器使用 `Arc<Mutex>` 确保线程安全
+- 权限检查是同步操作，不阻塞主线程
+
+## 测试和构建
+
+### 测试策略
+```bash
+cargo test && cargo test lib::tests  # 单元测试
+# 使用示例应用手动测试各种权限状态和交互场景
+```
+
+### 构建和发布
+```bash
+cargo build --debug && pnpm build    # 开发构建
+cargo build --release && pnpm build   # 生产构建
+pnpm release                          # 使用 release-it 发布
+```
+
+## 故障排除
+
+### 常见问题
+1. **权限请求无响应** - 检查 Info.plist 权限描述
+2. **监听器不工作** - 确保正确注册和注销监听器
+3. **构建失败** - 检查 Rust 和 Node.js 版本兼容性
+
+### 调试技巧
+- 使用 `console.log` 调试前端
+- 使用 `println!` 调试 Rust
+- 检查 Tauri 开发工具控制台输出
+
+## 依赖项
+
+### 核心依赖
+- `tauri` v2 - Tauri 框架
+- `serde` - 序列化/反序列化
+- `thiserror` - 错误处理
+- `uuid` - 监听器 ID 生成
+
+### macOS 特定依赖
+- `macos-accessibility-client` - 辅助功能权限
+- `objc2` - Objective-C 运行时绑定
+- `objc2-foundation` - Foundation 框架绑定
+
+### 开发依赖
+- `@tauri-apps/cli` - Tauri CLI
+- `@rollup/plugin-typescript` - TypeScript 支持
+- `typescript` - TypeScript 编译器
+
+## 相关资源
+
+- [Tauri v2 文档](https://v2.tauri.app/)
+- [PhotoKit 框架文档](https://developer.apple.com/documentation/photokit)
+- [macOS 权限文档](https://developer.apple.com/documentation/uikit/protecting_the_user_s_privacy/)
+
+## 版本兼容性
+
+- macOS 10.15+
+- Tauri v2.0+
+- Rust 1.77+
+- Node.js 18+
+
 <!--
  * @Author: Rais
  * @Date: 2025-08-04 23:36:58
- * @LastEditTime: 2025-08-05 14:37:09
+ * @LastEditTime: 2025-08-05 17:02:30
  * @LastEditors: Rais
  * @Description:
 -->
@@ -1138,37 +1318,6 @@ A: {answer_3}
 性能可达性: 目标可实现(100%)
 ```
 
-### 性能基准定义
-
-#### 响应时间基准
-
-```yaml
-API响应(P95): 查询<200ms | 创建<500ms | 更新<300ms | 删除<200ms
-页面加载: 首屏<2s | 完整<5s | 资源<1s
-数据库查询: 简单<50ms | 复杂<200ms | 聚合<500ms
-```
-
-#### 资源使用基准
-
-```yaml
-内存: 单服务<512MB | 峰值<1GB | 无泄露
-CPU: 平均<50% | 峰值<80% | 密集操作<5分钟
-网络: API<10KB/请求 | 文件<100MB/分钟
-```
-
-### 技术债务量化
-
-#### 债务计算公式
-
-```yaml
-债务分数 = 代码异味×40% + 架构债务×35% + 文档债务×25%
-
-代码异味: 长方法(+2) + 大类(+3) + 重复代码(+1) + 复杂条件(+1)
-架构债务: 循环依赖(+5) + 违反单责(+3) + 硬编码(+2)
-文档债务: 缺API文档(+2) + 缺注释(+1) + 过时文档(+1)
-
-债务等级: 0-10(低) | 11-25(中) | 26-50(高) | >50(严重)
-```
 
 ## AI自动编程特殊要求
 
@@ -1293,133 +1442,6 @@ CPU: 平均<50% | 峰值<80% | 密集操作<5分钟
     - 用户交互响应时间
 ```
 
-#### 监控数据存储
-
-```yaml
-数据存储策略:
-  实时数据: .vibedev/monitoring/realtime.md (当前状态)
-  历史数据: .vibedev/monitoring/history/ (按日期分文件)
-  告警日志: .vibedev/monitoring/alerts/ (按日期分文件)
-  质量报告: .vibedev/monitoring/quality/ (按feature_name分文件)
-
-文件结构:
-  .vibedev/monitoring/
-  ├── realtime.md              # 当前实时状态
-  ├── history/
-  │   ├── 2024-01-15.md        # 每日历史数据
-  │   ├── 2024-01-16.md
-  │   └── ...
-  ├── alerts/
-  │   ├── 2024-01-15.md        # 每日告警日志
-  │   ├── 2024-01-16.md
-  │   └── ...
-  └── quality/
-      ├── user-authentication.md  # 按功能分组的质量数据
-      ├── payment-integration.md
-      └── ...
-
-数据格式 (Markdown表格):
-  | 时间戳               | 指标名称           | 数值 | 功能名称  | 代理名称       | 状态   |
-  | -------------------- | ------------------ | ---- | --------- | -------------- | ------ |
-  | 2024-01-15T10:30:00Z | code_quality_score | 85   | user-auth | spec-developer | normal |
-```
-
-#### 监控文件模板
-
-##### realtime.md 模板
-
-```markdown
-# 实时监控状态
-
-## 更新时间
-2024-01-15T10:30:00Z
-
-## 当前代理状态
-| 代理名称           | 状态   | 当前任务     | 开始时间 | 预计完成时间 |
-| ------------------ | ------ | ------------ | -------- | ------------ |
-| spec-developer     | 运行中 | 实现用户登录 | 10:15:00 | 10:45:00     |
-| spec-code-reviewer | 等待中 | -            | -        | -            |
-
-## 实时质量指标
-| 功能名称            | 代码质量分数 | 测试覆盖率 | 安全漏洞 | 技术债务 |
-| ------------------- | ------------ | ---------- | -------- | -------- |
-| user-authentication | 85           | 82%        | 0        | 低       |
-| payment-integration | 78           | 75%        | 1(中危)  | 中等     |
-
-## 当前告警
-| 级别 | 时间     | 功能    | 描述         | 状态   |
-| ---- | -------- | ------- | ------------ | ------ |
-| 警告 | 10:25:00 | payment | 中危安全漏洞 | 处理中 |
-
-## 性能指标
-- CPU使用率: 45%
-- 内存使用率: 62%
-- 平均响应时间: 180ms
-```
-
-##### history/YYYY-MM-DD.md 模板
-
-```markdown
-# 历史监控数据 - 2024-01-15
-
-## 代码质量趋势
-| 时间  | 功能名称  | 质量分数 | 覆盖率 | 复杂度 | 重复率 |
-| ----- | --------- | -------- | ------ | ------ | ------ |
-| 09:00 | user-auth | 82       | 80%    | 6.5    | 3%     |
-| 10:00 | user-auth | 85       | 82%    | 6.2    | 2.8%   |
-| 11:00 | user-auth | 87       | 85%    | 6.0    | 2.5%   |
-
-## 性能数据
-| 时间  | API响应时间(ms) | 内存使用(MB) | CPU使用(%) | 错误率(%) |
-| ----- | --------------- | ------------ | ---------- | --------- |
-| 09:00 | 195             | 480          | 42         | 0.1       |
-| 10:00 | 180             | 520          | 45         | 0.0       |
-| 11:00 | 175             | 510          | 43         | 0.0       |
-
-## 代理工作记录
-| 时间        | 代理               | 任务        | 状态 | 耗时(分钟) |
-| ----------- | ------------------ | ----------- | ---- | ---------- |
-| 09:15-09:45 | spec-developer     | 实现登录API | 完成 | 30         |
-| 09:45-10:00 | spec-code-reviewer | 代码审查    | 完成 | 15         |
-| 10:00-10:30 | spec-tester        | 编写测试    | 完成 | 30         |
-```
-
-##### alerts/YYYY-MM-DD.md 模板
-
-```markdown
-# 告警日志 - 2024-01-15
-
-## 告警统计
-- 严重告警: 0
-- 警告告警: 2
-- 信息告警: 5
-- 已解决: 6
-- 处理中: 1
-
-## 告警详情
-| 时间  | 级别 | 功能      | 指标     | 阈值 | 实际值  | 状态   | 处理时间 |
-| ----- | ---- | --------- | -------- | ---- | ------- | ------ | -------- |
-| 08:30 | 警告 | payment   | 代码质量 | >75  | 72      | 已解决 | 15分钟   |
-| 10:25 | 警告 | payment   | 安全漏洞 | =0   | 1(中危) | 处理中 | -        |
-| 11:15 | 信息 | user-auth | 复杂度   | <8   | 8.2     | 已解决 | 5分钟    |
-
-## 告警处理记录
-### 告警ID: ALT-20240115-001
-- **时间**: 08:30:00
-- **级别**: 警告
-- **功能**: payment-integration
-- **问题**: 代码质量分数低于阈值
-- **触发值**: 72分 (阈值: >75分)
-- **处理过程**:
-  1. 08:35 - spec-code-reviewer开始分析
-  2. 08:40 - 发现代码重复率过高
-  3. 08:45 - spec-refactor开始重构
-  4. 08:55 - 重构完成，质量分数提升到78分
-- **解决时间**: 25分钟
-- **根本原因**: 代码重复率8.5%，超过5%阈值
-- **预防措施**: 增强代码审查检查重复率
-```
-
 ##### quality/feature_name.md 模板
 
 ```markdown
@@ -1501,28 +1523,6 @@ CPU: 平均<50% | 峰值<80% | 密集操作<5分钟
   - 代码质量评分 75-85分
   - 低危安全漏洞 > 5
   - 技术债务分数 25-50
-```
-
-#### 性能告警
-
-```yaml
-严重告警:
-  - API响应时间 > 1秒 (P95)
-  - 内存使用率 > 90%
-  - CPU使用率 > 95%
-  - 错误率 > 5%
-
-警告告警:
-  - API响应时间 > 500ms (P95)
-  - 内存使用率 > 80%
-  - CPU使用率 > 80%
-  - 错误率 > 2%
-
-信息告警:
-  - API响应时间 > 300ms (P95)
-  - 内存使用率 > 70%
-  - CPU使用率 > 70%
-  - 错误率 > 1%
 ```
 
 #### 工作流告警
@@ -1869,16 +1869,6 @@ Git Flow分支合并信息:
   - 100%的异常在4小时内恢复
 ```
 
-#### RPO (恢复点目标)
-
-```yaml
-数据丢失容忍度:
-  - 代码变更: 0 (实时备份)
-  - 配置文件: < 5分钟
-  - 测试结果: < 15分钟
-  - 监控数据: < 30分钟
-  - 日志数据: < 60分钟
-```
 
 ### 恢复验证和报告
 

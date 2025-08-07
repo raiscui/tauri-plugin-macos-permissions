@@ -156,6 +156,31 @@ impl PhotoKitPermissionManager {
         }
     }
 
+    /// 获取照片库中的总照片数量
+    ///
+    /// 此方法会查询照片库中所有图片类型的资源数量。
+    /// 需要用户已授予读取权限才能成功查询。
+    ///
+    /// # Returns
+    /// 返回照片库中的总照片数量
+    ///
+    /// # Errors
+    /// 如果没有权限或查询失败，返回相应的错误
+    pub fn get_photos_count(&self) -> Result<u64, PhotoKitManagerError> {
+        #[cfg(target_os = "macos")]
+        {
+            self.bridge
+                .get_photos_count()
+                .map_err(PhotoKitManagerError::from)
+        }
+
+        #[cfg(not(target_os = "macos"))]
+        {
+            // 在非 macOS 平台，返回 0 以保持兼容性
+            Ok(0)
+        }
+    }
+
     /// 从缓存获取权限状态
     fn get_cached_status(
         &self,

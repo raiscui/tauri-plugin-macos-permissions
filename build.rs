@@ -16,6 +16,7 @@ const COMMANDS: &[&str] = &[
     "register_photokit_permission_listener",
     "unregister_photokit_permission_listener",
     "get_photokit_permission_listeners",
+    "get_photos_count",
 ];
 
 fn main() {

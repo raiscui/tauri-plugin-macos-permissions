@@ -34,6 +34,7 @@ export const COMMAND = {
         "plugin:macos-permissions|unregister_photokit_permission_listener",
     GET_PHOTOKIT_PERMISSION_LISTENERS:
         "plugin:macos-permissions|get_photokit_permission_listeners",
+    GET_PHOTOS_COUNT: "plugin:macos-permissions|get_photos_count",
 };
 
 /**
@@ -330,4 +331,26 @@ export const unregisterPhotoKitPermissionListener = (listenerId: string): Promis
  */
 export const getPhotoKitPermissionListeners = (): Promise<ListenerInfo[]> => {
     return invoke<ListenerInfo[]>(COMMAND.GET_PHOTOKIT_PERMISSION_LISTENERS);
+};
+
+/**
+ * Get the total number of photos in the photo library.
+ *
+ * This method queries the photo library for all image-type assets and returns the count.
+ * The user must have granted read permission for this to work.
+ *
+ * @returns The total number of photos in the photo library
+ *
+ * @example
+ * import { getPhotosCount } from "tauri-plugin-macos-permissions-api";
+ *
+ * try {
+ *   const count = await getPhotosCount();
+ *   console.log('照片总数:', count);
+ * } catch (error) {
+ *   console.error('查询照片数量失败:', error);
+ * }
+ */
+export const getPhotosCount = (): Promise<number> => {
+    return invoke<number>(COMMAND.GET_PHOTOS_COUNT);
 };

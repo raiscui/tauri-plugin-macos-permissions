@@ -21,6 +21,7 @@ Default permissions for the plugin
 - `allow-register-photokit-permission-listener`
 - `allow-unregister-photokit-permission-listener`
 - `allow-get-photokit-permission-listeners`
+- `allow-get-photos-count`
 
 ## Permission Table
 
@@ -235,6 +236,32 @@ Enables the get_photokit_permission_listeners command without any pre-configured
 <td>
 
 Denies the get_photokit_permission_listeners command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:allow-get-photos-count`
+
+</td>
+<td>
+
+Enables the get_photos_count command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`macos-permissions:deny-get-photos-count`
+
+</td>
+<td>
+
+Denies the get_photos_count command without any pre-configured scope.
 
 </td>
 </tr>
