@@ -16,10 +16,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ayangweb/tauri-plugin-macos-permissions.git"
+        "url": "git+https://github.com/raiscui/tauri-plugin-macos-permissions.git"
     },
-    "homepage": "https://github.com/ayangweb/tauri-plugin-macos-permissions#readme",
-    "bugs": "https://github.com/ayangweb/tauri-plugin-macos-permissions/issues",
+    "homepage": "https://github.com/raiscui/tauri-plugin-macos-permissions#readme",
+    "bugs": "https://github.com/raiscui/tauri-plugin-macos-permissions.git/issues",
     "license": "MIT",
     "type": "module",
     "types": "./dist-js/index.d.ts",

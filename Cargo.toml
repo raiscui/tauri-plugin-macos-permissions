@@ -3,7 +3,7 @@ name = "tauri-plugin-macos-permissions-with-photokit"
 version = "2.3.1"
 authors = ["ayangweb", "rais"]
 description = "Support for checking and requesting macos system permissions."
-repository = "https://github.com/ayangweb/tauri-plugin-macos-permissions"
+repository = "https://github.com/raiscui/tauri-plugin-macos-permissions"
 keywords = [
     "tauri-plugin",
     "macos-permissions",
