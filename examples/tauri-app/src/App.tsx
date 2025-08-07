@@ -24,7 +24,7 @@ import {
     type PhotoKitAccessLevel,
     type PhotoKitAuthorizationStatus,
     type ListenerInfo,
-} from "tauri-plugin-macos-permissions-api";
+} from "tauri-plugin-macos-permissions-with-photokit-api";
 
 const App = () => {
     const state = useReactive({

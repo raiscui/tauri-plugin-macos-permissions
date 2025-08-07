@@ -2,7 +2,7 @@
 
 ## 错误信息
 ```
-Command plugin:macos-permissions|[命令名] not allowed by ACL
+Command plugin:macos-permissions-with-photokit|[命令名] not allowed by ACL
 ```
 
 ## 快速解决方案

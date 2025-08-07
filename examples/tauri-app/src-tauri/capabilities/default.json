@@ -7,7 +7,7 @@
     ],
     "permissions": [
         "core:default",
-        "macos-permissions:default",
+        "macos-permissions-with-photokit:default",
         "log:default"
     ]
 }

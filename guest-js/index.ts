@@ -2,39 +2,39 @@ import { invoke } from "@tauri-apps/api/core";
 
 export const COMMAND = {
     CHECK_ACCESSIBILITY_PERMISSION:
-        "plugin:macos-permissions|check_accessibility_permission",
+        "plugin:macos-permissions-with-photokit|check_accessibility_permission",
     REQUEST_ACCESSIBILITY_PERMISSION:
-        "plugin:macos-permissions|request_accessibility_permission",
+        "plugin:macos-permissions-with-photokit|request_accessibility_permission",
     CHECK_FULL_DISK_ACCESS_PERMISSION:
-        "plugin:macos-permissions|check_full_disk_access_permission",
+        "plugin:macos-permissions-with-photokit|check_full_disk_access_permission",
     REQUEST_FULL_DISK_ACCESS_PERMISSION:
-        "plugin:macos-permissions|request_full_disk_access_permission",
+        "plugin:macos-permissions-with-photokit|request_full_disk_access_permission",
     CHECK_SCREEN_RECORDING_PERMISSION:
-        "plugin:macos-permissions|check_screen_recording_permission",
+        "plugin:macos-permissions-with-photokit|check_screen_recording_permission",
     REQUEST_SCREEN_RECORDING_PERMISSION:
-        "plugin:macos-permissions|request_screen_recording_permission",
+        "plugin:macos-permissions-with-photokit|request_screen_recording_permission",
     CHECK_MICROPHONE_PERMISSION:
-        "plugin:macos-permissions|check_microphone_permission",
+        "plugin:macos-permissions-with-photokit|check_microphone_permission",
     REQUEST_MICROPHONE_PERMISSION:
-        "plugin:macos-permissions|request_microphone_permission",
-    CHECK_CAMERA_PERMISSION: "plugin:macos-permissions|check_camera_permission",
+        "plugin:macos-permissions-with-photokit|request_microphone_permission",
+    CHECK_CAMERA_PERMISSION: "plugin:macos-permissions-with-photokit|check_camera_permission",
     REQUEST_CAMERA_PERMISSION:
-        "plugin:macos-permissions|request_camera_permission",
+        "plugin:macos-permissions-with-photokit|request_camera_permission",
     CHECK_INPUT_MONITORING_PERMISSION:
-        "plugin:macos-permissions|check_input_monitoring_permission",
+        "plugin:macos-permissions-with-photokit|check_input_monitoring_permission",
     REQUEST_INPUT_MONITORING_PERMISSION:
-        "plugin:macos-permissions|request_input_monitoring_permission",
+        "plugin:macos-permissions-with-photokit|request_input_monitoring_permission",
     CHECK_PHOTOKIT_PERMISSION:
-        "plugin:macos-permissions|check_photokit_permission",
+        "plugin:macos-permissions-with-photokit|check_photokit_permission",
     REQUEST_PHOTOKIT_PERMISSION:
-        "plugin:macos-permissions|request_photokit_permission",
+        "plugin:macos-permissions-with-photokit|request_photokit_permission",
     REGISTER_PHOTOKIT_PERMISSION_LISTENER:
-        "plugin:macos-permissions|register_photokit_permission_listener",
+        "plugin:macos-permissions-with-photokit|register_photokit_permission_listener",
     UNREGISTER_PHOTOKIT_PERMISSION_LISTENER:
-        "plugin:macos-permissions|unregister_photokit_permission_listener",
+        "plugin:macos-permissions-with-photokit|unregister_photokit_permission_listener",
     GET_PHOTOKIT_PERMISSION_LISTENERS:
-        "plugin:macos-permissions|get_photokit_permission_listeners",
-    GET_PHOTOS_COUNT: "plugin:macos-permissions|get_photos_count",
+        "plugin:macos-permissions-with-photokit|get_photokit_permission_listeners",
+    GET_PHOTOS_COUNT: "plugin:macos-permissions-with-photokit|get_photos_count",
 };
 
 /**
@@ -43,7 +43,7 @@ export const COMMAND = {
  * @returns `true` if accessibility permission are granted, `false` otherwise.
  *
  * @example
- * import { checkAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkAccessibilityPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkAccessibilityPermission();
  * console.log(authorized); // false
@@ -56,7 +56,7 @@ export const checkAccessibilityPermission = () => {
  * Request accessibility permission.
  *
  * @example
- * import { requestAccessibilityPermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestAccessibilityPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * await requestAccessibilityPermission();
  */
@@ -70,7 +70,7 @@ export const requestAccessibilityPermission = () => {
  * @returns `true` if full disk access permission are granted, `false` otherwise.
  *
  * @example
- * import { checkFullDiskAccessPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkFullDiskAccessPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkFullDiskAccessPermission();
  * console.log(authorized); // false
@@ -97,7 +97,7 @@ export const requestFullDiskAccessPermission = () => {
  * @returns `true` if screen recording permission are granted, `false` otherwise.
  *
  * @example
- * import { checkScreenRecordingPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkScreenRecordingPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkScreenRecordingPermission();
  * console.log(authorized); // false
@@ -110,7 +110,7 @@ export const checkScreenRecordingPermission = () => {
  * Request screen recording permission.
  *
  * @example
- * import { requestScreenRecordingPermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestScreenRecordingPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * await requestScreenRecordingPermission();
  */
@@ -124,7 +124,7 @@ export const requestScreenRecordingPermission = () => {
  * @returns `true` if microphone permission are granted, `false` otherwise.
  *
  * @example
- * import { checkMicrophonePermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkMicrophonePermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkMicrophonePermission();
  * console.log(authorized); // false
@@ -137,7 +137,7 @@ export const checkMicrophonePermission = () => {
  * Request microphone permission.
  *
  * @example
- * import { requestMicrophonePermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestMicrophonePermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * await requestMicrophonePermission();
  */
@@ -151,7 +151,7 @@ export const requestMicrophonePermission = () => {
  * @returns `true` if camera permission are granted, `false` otherwise.
  *
  * @example
- * import { checkCameraPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkCameraPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkCameraPermission();
  * console.log(authorized); // false
@@ -164,7 +164,7 @@ export const checkCameraPermission = () => {
  * Request camera permission.
  *
  * @example
- * import { requestCameraPermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestCameraPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * await requestCameraPermission();
  */
@@ -178,7 +178,7 @@ export const requestCameraPermission = () => {
  * @returns `true` if input monitoring permission are granted, `false` otherwise.
  *
  * @example
- * import { checkInputMonitoringPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkInputMonitoringPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const authorized = await checkInputMonitoringPermission();
  * console.log(authorized); // false
@@ -191,7 +191,7 @@ export const checkInputMonitoringPermission = () => {
  * Request input monitoring permission.
  *
  * @example
- * import { requestInputMonitoringPermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestInputMonitoringPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * await requestInputMonitoringPermission();
  */
@@ -231,7 +231,7 @@ export interface ListenerInfo {
  * @returns The current authorization status for the specified access level
  *
  * @example
- * import { checkPhotoKitPermission } from "tauri-plugin-macos-permissions-api";
+ * import { checkPhotoKitPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const status = await checkPhotoKitPermission('read');
  * console.log(status); // "authorized" | "denied" | "notDetermined" | ...
@@ -249,7 +249,7 @@ export const checkPhotoKitPermission = (accessLevel: PhotoKitAccessLevel): Promi
  * @returns The authorization status after user response
  *
  * @example
- * import { requestPhotoKitPermission } from "tauri-plugin-macos-permissions-api";
+ * import { requestPhotoKitPermission } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * try {
  *   const status = await requestPhotoKitPermission('readWrite');
@@ -276,7 +276,7 @@ export const requestPhotoKitPermission = (accessLevel: PhotoKitAccessLevel): Pro
  * @returns The listener ID on success
  *
  * @example
- * import { registerPhotoKitPermissionListener } from "tauri-plugin-macos-permissions-api";
+ * import { registerPhotoKitPermissionListener } from "tauri-plugin-macos-permissions-with-photokit-api";
  * import { listen } from '@tauri-apps/api/event';
  *
  * // 注册监听器
@@ -302,7 +302,7 @@ export const registerPhotoKitPermissionListener = (accessLevel: PhotoKitAccessLe
  * @param listenerId - The ID of the listener to unregister
  *
  * @example
- * import { unregisterPhotoKitPermissionListener } from "tauri-plugin-macos-permissions-api";
+ * import { unregisterPhotoKitPermissionListener } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * // 注销监听器
  * try {
@@ -324,7 +324,7 @@ export const unregisterPhotoKitPermissionListener = (listenerId: string): Promis
  * @returns List of active listeners
  *
  * @example
- * import { getPhotoKitPermissionListeners } from "tauri-plugin-macos-permissions-api";
+ * import { getPhotoKitPermissionListeners } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * const listeners = await getPhotoKitPermissionListeners();
  * console.log('活跃的监听器:', listeners);
@@ -342,7 +342,7 @@ export const getPhotoKitPermissionListeners = (): Promise<ListenerInfo[]> => {
  * @returns The total number of photos in the photo library
  *
  * @example
- * import { getPhotosCount } from "tauri-plugin-macos-permissions-api";
+ * import { getPhotosCount } from "tauri-plugin-macos-permissions-with-photokit-api";
  *
  * try {
  *   const count = await getPhotosCount();

@@ -145,7 +145,7 @@
 - **耗时**: 15分钟
 
 ### 问题2: 模块找不到错误
-- **描述**: 示例应用找不到 tauri-plugin-macos-permissions-api 模块
+- **描述**: 示例应用找不到 tauri-plugin-macos-permissions-with-photokit-api 模块
 - **解决方案**: 先构建 JavaScript 包生成类型定义文件
 - **耗时**: 20分钟
 

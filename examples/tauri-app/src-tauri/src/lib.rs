@@ -4,7 +4,7 @@ use tauri_plugin_log::{RotationStrategy, Target, TargetKind, TimezoneStrategy};
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_macos_permissions::init())
+        .plugin(tauri_plugin_macos_permissions_with_photokit::init())
         .plugin(
             tauri_plugin_log::Builder::new()
                 // 设置日志级别为 Debug，这样可以记录更多信息

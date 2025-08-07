@@ -35,7 +35,7 @@ Default permissions for the plugin
 <tr>
 <td>
 
-`macos-permissions:allow-check-accessibility-permission`
+`macos-permissions-with-photokit:allow-check-accessibility-permission`
 
 </td>
 <td>
@@ -48,7 +48,7 @@ Enables the check_accessibility_permission command without any pre-configured sc
 <tr>
 <td>
 
-`macos-permissions:deny-check-accessibility-permission`
+`macos-permissions-with-photokit:deny-check-accessibility-permission`
 
 </td>
 <td>
@@ -61,7 +61,7 @@ Denies the check_accessibility_permission command without any pre-configured sco
 <tr>
 <td>
 
-`macos-permissions:allow-check-camera-permission`
+`macos-permissions-with-photokit:allow-check-camera-permission`
 
 </td>
 <td>
@@ -74,7 +74,7 @@ Enables the check_camera_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:deny-check-camera-permission`
+`macos-permissions-with-photokit:deny-check-camera-permission`
 
 </td>
 <td>
@@ -87,7 +87,7 @@ Denies the check_camera_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-check-full-disk-access-permission`
+`macos-permissions-with-photokit:allow-check-full-disk-access-permission`
 
 </td>
 <td>
@@ -100,7 +100,7 @@ Enables the check_full_disk_access_permission command without any pre-configured
 <tr>
 <td>
 
-`macos-permissions:deny-check-full-disk-access-permission`
+`macos-permissions-with-photokit:deny-check-full-disk-access-permission`
 
 </td>
 <td>
@@ -113,7 +113,7 @@ Denies the check_full_disk_access_permission command without any pre-configured 
 <tr>
 <td>
 
-`macos-permissions:allow-check-input-monitoring-permission`
+`macos-permissions-with-photokit:allow-check-input-monitoring-permission`
 
 </td>
 <td>
@@ -126,7 +126,7 @@ Enables the check_input_monitoring_permission command without any pre-configured
 <tr>
 <td>
 
-`macos-permissions:deny-check-input-monitoring-permission`
+`macos-permissions-with-photokit:deny-check-input-monitoring-permission`
 
 </td>
 <td>
@@ -139,7 +139,7 @@ Denies the check_input_monitoring_permission command without any pre-configured 
 <tr>
 <td>
 
-`macos-permissions:allow-check-microphone-permission`
+`macos-permissions-with-photokit:allow-check-microphone-permission`
 
 </td>
 <td>
@@ -152,7 +152,7 @@ Enables the check_microphone_permission command without any pre-configured scope
 <tr>
 <td>
 
-`macos-permissions:deny-check-microphone-permission`
+`macos-permissions-with-photokit:deny-check-microphone-permission`
 
 </td>
 <td>
@@ -165,7 +165,7 @@ Denies the check_microphone_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-check-photokit-permission`
+`macos-permissions-with-photokit:allow-check-photokit-permission`
 
 </td>
 <td>
@@ -178,7 +178,7 @@ Enables the check_photokit_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:deny-check-photokit-permission`
+`macos-permissions-with-photokit:deny-check-photokit-permission`
 
 </td>
 <td>
@@ -191,7 +191,7 @@ Denies the check_photokit_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-check-screen-recording-permission`
+`macos-permissions-with-photokit:allow-check-screen-recording-permission`
 
 </td>
 <td>
@@ -204,7 +204,7 @@ Enables the check_screen_recording_permission command without any pre-configured
 <tr>
 <td>
 
-`macos-permissions:deny-check-screen-recording-permission`
+`macos-permissions-with-photokit:deny-check-screen-recording-permission`
 
 </td>
 <td>
@@ -217,7 +217,7 @@ Denies the check_screen_recording_permission command without any pre-configured 
 <tr>
 <td>
 
-`macos-permissions:allow-get-photokit-permission-listeners`
+`macos-permissions-with-photokit:allow-get-photokit-permission-listeners`
 
 </td>
 <td>
@@ -230,7 +230,7 @@ Enables the get_photokit_permission_listeners command without any pre-configured
 <tr>
 <td>
 
-`macos-permissions:deny-get-photokit-permission-listeners`
+`macos-permissions-with-photokit:deny-get-photokit-permission-listeners`
 
 </td>
 <td>
@@ -243,7 +243,7 @@ Denies the get_photokit_permission_listeners command without any pre-configured 
 <tr>
 <td>
 
-`macos-permissions:allow-get-photos-count`
+`macos-permissions-with-photokit:allow-get-photos-count`
 
 </td>
 <td>
@@ -256,7 +256,7 @@ Enables the get_photos_count command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:deny-get-photos-count`
+`macos-permissions-with-photokit:deny-get-photos-count`
 
 </td>
 <td>
@@ -269,7 +269,7 @@ Denies the get_photos_count command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-register-photokit-permission-listener`
+`macos-permissions-with-photokit:allow-register-photokit-permission-listener`
 
 </td>
 <td>
@@ -282,7 +282,7 @@ Enables the register_photokit_permission_listener command without any pre-config
 <tr>
 <td>
 
-`macos-permissions:deny-register-photokit-permission-listener`
+`macos-permissions-with-photokit:deny-register-photokit-permission-listener`
 
 </td>
 <td>
@@ -295,7 +295,7 @@ Denies the register_photokit_permission_listener command without any pre-configu
 <tr>
 <td>
 
-`macos-permissions:allow-request-accessibility-permission`
+`macos-permissions-with-photokit:allow-request-accessibility-permission`
 
 </td>
 <td>
@@ -308,7 +308,7 @@ Enables the request_accessibility_permission command without any pre-configured 
 <tr>
 <td>
 
-`macos-permissions:deny-request-accessibility-permission`
+`macos-permissions-with-photokit:deny-request-accessibility-permission`
 
 </td>
 <td>
@@ -321,7 +321,7 @@ Denies the request_accessibility_permission command without any pre-configured s
 <tr>
 <td>
 
-`macos-permissions:allow-request-camera-permission`
+`macos-permissions-with-photokit:allow-request-camera-permission`
 
 </td>
 <td>
@@ -334,7 +334,7 @@ Enables the request_camera_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:deny-request-camera-permission`
+`macos-permissions-with-photokit:deny-request-camera-permission`
 
 </td>
 <td>
@@ -347,7 +347,7 @@ Denies the request_camera_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-request-full-disk-access-permission`
+`macos-permissions-with-photokit:allow-request-full-disk-access-permission`
 
 </td>
 <td>
@@ -360,7 +360,7 @@ Enables the request_full_disk_access_permission command without any pre-configur
 <tr>
 <td>
 
-`macos-permissions:deny-request-full-disk-access-permission`
+`macos-permissions-with-photokit:deny-request-full-disk-access-permission`
 
 </td>
 <td>
@@ -373,7 +373,7 @@ Denies the request_full_disk_access_permission command without any pre-configure
 <tr>
 <td>
 
-`macos-permissions:allow-request-input-monitoring-permission`
+`macos-permissions-with-photokit:allow-request-input-monitoring-permission`
 
 </td>
 <td>
@@ -386,7 +386,7 @@ Enables the request_input_monitoring_permission command without any pre-configur
 <tr>
 <td>
 
-`macos-permissions:deny-request-input-monitoring-permission`
+`macos-permissions-with-photokit:deny-request-input-monitoring-permission`
 
 </td>
 <td>
@@ -399,7 +399,7 @@ Denies the request_input_monitoring_permission command without any pre-configure
 <tr>
 <td>
 
-`macos-permissions:allow-request-microphone-permission`
+`macos-permissions-with-photokit:allow-request-microphone-permission`
 
 </td>
 <td>
@@ -412,7 +412,7 @@ Enables the request_microphone_permission command without any pre-configured sco
 <tr>
 <td>
 
-`macos-permissions:deny-request-microphone-permission`
+`macos-permissions-with-photokit:deny-request-microphone-permission`
 
 </td>
 <td>
@@ -425,7 +425,7 @@ Denies the request_microphone_permission command without any pre-configured scop
 <tr>
 <td>
 
-`macos-permissions:allow-request-photokit-permission`
+`macos-permissions-with-photokit:allow-request-photokit-permission`
 
 </td>
 <td>
@@ -438,7 +438,7 @@ Enables the request_photokit_permission command without any pre-configured scope
 <tr>
 <td>
 
-`macos-permissions:deny-request-photokit-permission`
+`macos-permissions-with-photokit:deny-request-photokit-permission`
 
 </td>
 <td>
@@ -451,7 +451,7 @@ Denies the request_photokit_permission command without any pre-configured scope.
 <tr>
 <td>
 
-`macos-permissions:allow-request-screen-recording-permission`
+`macos-permissions-with-photokit:allow-request-screen-recording-permission`
 
 </td>
 <td>
@@ -464,7 +464,7 @@ Enables the request_screen_recording_permission command without any pre-configur
 <tr>
 <td>
 
-`macos-permissions:deny-request-screen-recording-permission`
+`macos-permissions-with-photokit:deny-request-screen-recording-permission`
 
 </td>
 <td>
@@ -477,7 +477,7 @@ Denies the request_screen_recording_permission command without any pre-configure
 <tr>
 <td>
 
-`macos-permissions:allow-unregister-photokit-permission-listener`
+`macos-permissions-with-photokit:allow-unregister-photokit-permission-listener`
 
 </td>
 <td>
@@ -490,7 +490,7 @@ Enables the unregister_photokit_permission_listener command without any pre-conf
 <tr>
 <td>
 
-`macos-permissions:deny-unregister-photokit-permission-listener`
+`macos-permissions-with-photokit:deny-unregister-photokit-permission-listener`
 
 </td>
 <td>

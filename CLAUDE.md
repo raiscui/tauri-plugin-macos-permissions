@@ -70,7 +70,7 @@ tauri::Builder::default()
 ### 2. 权限配置
 ```json
 {
-    "permissions": ["macos-permissions:default"]
+    "permissions": ["macos-permissions-with-photokit:default"]
 }
 ```
 
@@ -91,7 +91,7 @@ import {
     requestAccessibilityPermission,
     checkPhotoKitPermission,
     requestPhotoKitPermission
-} from "tauri-plugin-macos-permissions-api";
+} from "tauri-plugin-macos-permissions-with-photokit-api";
 
 // 检查和请求权限
 const hasAccessibility = await checkAccessibilityPermission();
@@ -178,13 +178,7 @@ pnpm release                          # 使用 release-it 发布
 - Rust 1.77+
 - Node.js 18+
 
-<!--
- * @Author: Rais
- * @Date: 2025-08-04 23:36:58
- * @LastEditTime: 2025-08-05 17:02:30
- * @LastEditors: Rais
- * @Description:
--->
+
 # 规格驱动开发规则
 
 基于专业化AI代理的规格驱动开发方法，通过协调的子代理序列和质量门控机制，确保从概念到生产就绪代码的高质量自动化开发管道。

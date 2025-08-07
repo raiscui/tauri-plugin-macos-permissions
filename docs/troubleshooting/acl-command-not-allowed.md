@@ -5,7 +5,7 @@
 在 Tauri 应用运行时遇到以下错误：
 
 ```
-[ERROR] 查询照片数量失败: Command plugin:macos-permissions|get_photos_count not allowed by ACL
+[ERROR] 查询照片数量失败: Command plugin:macos-permissions-with-photokit|get_photos_count not allowed by ACL
 ```
 
 ## 错误原因
@@ -154,7 +154,7 @@ tail -f ~/Library/Logs/com.tauri-app.app/tauri-app.log
 而不是之前的错误：
 
 ```
-[ERROR] Command plugin:macos-permissions|get_photos_count not allowed by ACL
+[ERROR] Command plugin:macos-permissions-with-photokit|get_photos_count not allowed by ACL
 ```
 
 ## 关键要点

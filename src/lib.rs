@@ -196,7 +196,7 @@ impl PermissionStatusChangeEvent {
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-    Builder::new("macos-permissions")
+    Builder::new("macos-permissions-with-photokit")
         .invoke_handler(generate_handler![
             commands::check_accessibility_permission,
             commands::request_accessibility_permission,

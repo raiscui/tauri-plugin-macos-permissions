@@ -17,7 +17,7 @@ cargo add tauri-plugin-macos-permissions
 You can install the JavaScript Guest bindings using your preferred JavaScript package manager:
 
 ```shell
-pnpm add tauri-plugin-macos-permissions-api
+pnpm add tauri-plugin-macos-permissions-with-photokit-api
 ```
 
 ## Usage
@@ -70,7 +70,7 @@ import {
   checkAccessibilityPermission,
   checkPhotoKitPermission,
   requestPhotoKitPermission
-} from "tauri-plugin-macos-permissions-api";
+} from "tauri-plugin-macos-permissions-with-photokit-api";
 
 // Check traditional permissions
 const authorized = await checkAccessibilityPermission();
@@ -154,7 +154,7 @@ open src-tauri/target/release/bundle/macos/tauri-app.app
 
 如果遇到类似错误：
 ```
-Command plugin:macos-permissions|[命令名] not allowed by ACL
+Command plugin:macos-permissions-with-photokit|[命令名] not allowed by ACL
 ```
 
 请参考：
