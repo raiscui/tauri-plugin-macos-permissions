@@ -1,7 +1,7 @@
 {
   "name": "tauri-plugin-macos-permissions-api",
-  "version": "2.3.0",
-  "author": "ayangweb",
+  "version": "2.3.1",
+  "author": "ayangweb,rais",
   "description": "Support for checking and requesting macos system permissions.",
   "keywords": [
     "tauri",

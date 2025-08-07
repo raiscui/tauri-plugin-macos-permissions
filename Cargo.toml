@@ -1,7 +1,7 @@
 [package]
 name = "tauri-plugin-macos-permissions"
-version = "2.3.0"
-authors = ["ayangweb"]
+version = "2.3.1"
+authors = ["ayangweb", "rais"]
 description = "Support for checking and requesting macos system permissions."
 repository = "https://github.com/ayangweb/tauri-plugin-macos-permissions"
 keywords = [
