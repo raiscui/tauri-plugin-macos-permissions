@@ -1,5 +1,7 @@
 # tauri-plugin-macos-permissions
 
+> Rais 修改版: 增加了PhotoKit的读写权限
+
 > This plugin only works on tauri v2, if you need the v1 plugin, feel free to submit a PR!
 
 Support for checking and requesting macOS system permissions, including traditional permissions and PhotoKit photo library access permissions.
